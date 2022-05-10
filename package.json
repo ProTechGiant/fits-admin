@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://food.web-relieve.com",
-  "proxy": "http://localhost:5000",
+  "proxy": "https://fitness-server-app.herokuapp.com",
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.0",
