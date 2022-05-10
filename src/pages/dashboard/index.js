@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { totalRecords } from "../../helpers/auth";
 import SplashScreen from "../../modules/Partials/SplashScreen";
 import { GET_USER_DATA } from "../../reducers/userReducer";
+// <!-- <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" /> -->
 import { useDispatch, useSelector } from "react-redux";
 const Dashboard = () => {
   const dispatch = useDispatch();

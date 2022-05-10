@@ -110,14 +110,14 @@ const Login = () => {
                       {passwordShown ? (
                         <span
                           toggle="#password-field"
-                          class="fa fa-fw fa-eye field-icon toggle-password mx-4"
+                          className="fa fa-fw fa-eye field-icon toggle-password mx-4"
                           aria-hidden="false"
                           onClick={togglePassword}
                         ></span>
                       ) : (
                         <span
                           toggle="#password-field"
-                          class="fa fa-eye-slash field-icon toggle-password mx-4"
+                          className="fa fa-eye-slash field-icon toggle-password mx-4"
                           aria-hidden="true"
                           onClick={togglePassword}
                         ></span>
@@ -135,29 +135,29 @@ const Login = () => {
                       </Link>
                     </h6> */}
                     {/* <div
-                      class="modal fade"
+                      className="modal fade"
                       id="exampleModal"
                       tabindex="-1"
                       role="dialog"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
                     >
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
                               Send Otp on your email
                             </h5>
                             <button
                               type="button"
-                              class="close"
+                              className="close"
                               data-dismiss="modal"
                               aria-label="Close"
                             >
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <div class="modal-body">
+                          <div className="modal-body">
                             <div className="container">
                               <div className="row">
                                 <div className="col-sm-12 col-12 col-lg-12">
@@ -189,22 +189,22 @@ const Login = () => {
                               </div>
                             </div>
                           </div>
-                          <div class="modal-footer">
+                          <div className="modal-footer">
                             <button
                               type="button"
-                              class="btn btn-secondary"
+                              className="btn btn-secondary"
                               data-dismiss="modal"
                             >
                               Close
                             </button>
                             <button
                               type="button"
-                              class="btn btn-danger"
+                              className="btn btn-danger"
                               onClick={() => handleForgot()}
                             >
                               {load ? (
                                 <div
-                                  class="spinner-border spinner-border-sm"
+                                  className="spinner-border spinner-border-sm"
                                   role="status"
                                 ></div>
                               ) : (
@@ -225,7 +225,7 @@ const Login = () => {
                       >
                         {loading ? (
                           <div
-                            class="spinner-border spinner-border-sm"
+                            className="spinner-border spinner-border-sm"
                             role="status"
                           ></div>
                         ) : (
