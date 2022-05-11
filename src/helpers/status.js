@@ -5,13 +5,13 @@ export const statusUpdate = async (body) => {
   const { Id, status, message } = body;
   console.log("helpers id", Id);
   console.log("helpers status", status);
-  return await fetch(`${baseUrl}/api/admin/user/${Id}`, {
+  return await fetch(`${baseUrl}/api/admin/trainer/status/${Id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     },
-    body: JSON.stringify({ accountVerified: status }),
+    body: JSON.stringify({ trainerVerified: status }),
   })
     .then(async (response) => {
       const data = await response.json();

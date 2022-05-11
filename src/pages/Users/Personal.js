@@ -11,11 +11,13 @@ const UserData = (props) => {
   console.log("personal", personal);
   const dispatch = useDispatch();
   const [city, setCity] = useState("");
+  const [value, onChange] = useState(new Date());
   const [country, setCountry] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState("12/06/2050");
+  const [birthDate, setBirthDate] = useState();
   const [state, setState] = useState("");
+
   const ForUpdate = {
     id,
     name: name,
@@ -27,7 +29,7 @@ const UserData = (props) => {
   };
   const UpdateUserDetail = () => {
     dispatch(UPDATE_PERSONAL_DETAIL_BY_ID(ForUpdate));
-    console.log("helooooooo bro");
+    console.log("helooooooo bro", value);
     // if (Response?.status == 201) {
     //   toast.success("status updated", {
     //     autoClose: 2000,
@@ -38,6 +40,7 @@ const UserData = (props) => {
     //   });
     // }
   };
+  const dateToFormat = "1976-04-19";
   return (
     <>
       <form className="form form-label-right">
@@ -58,11 +61,21 @@ const UserData = (props) => {
 
           <div className="col-lg-6">
             <label htmlFor="ProductName">Date of Birth</label>
+
+            {/* <DatePicker
+              className="d-flex p-2 form-control"
+              onChange={onChange}
+              value={value}
+            /> */}
+            {/* <Moment className="form-control">{birthDate}</Moment> */}
+
             <input
               type="date"
               className="form-control"
               //   value={moment(birthDate).format("DD-MMM-YYYY")}
-              value={moment(birthDate).format("yyyy-MM-dd")}
+              value={
+                birthDate ? birthDate : moment(birthDate).format("yyyy-MM-dd")
+              }
               onChange={(e) => {
                 setBirthDate(e.target.value);
               }}

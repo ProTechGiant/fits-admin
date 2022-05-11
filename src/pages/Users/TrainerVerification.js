@@ -4,13 +4,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const StatusUpdate = (props) => {
-  const [state, setState] = useState("");
+  console.log("sadjfk", props);
 
   const { row, reload } = props;
+
+  const [state, setState] = useState("");
 
   const ChangeState = (e, id) => {
     e.preventDefault();
     setState(e.target.value);
+    console.log("state", state);
     StatusUpdateFunc(e.target.value, id);
   };
 
@@ -59,22 +62,22 @@ const StatusUpdate = (props) => {
           >
             <option
               value="disapproved"
-              selected={row?.TrainerVerified === "disapproved" ? true : false}
-              disabled={row?.TrainerVerified === "disapproved" ? true : false}
+              selected={row?.trainerVerified === "disapproved" ? true : false}
+              disabled={row?.trainerVerified === "disapproved" ? true : false}
             >
               Disapproved
             </option>
             <option
               value="approved"
-              selected={row?.TrainerVerified === "approved" ? true : false}
-              disabled={row?.TrainerVerified === "approved" ? true : false}
+              selected={row?.trainerVerified === "approved" ? true : false}
+              disabled={row?.trainerVerified === "approved" ? true : false}
             >
               Approved
             </option>
             <option
               value="pending"
-              selected={row?.TrainerVerified === "pending" ? true : false}
-              disabled={row?.TrainerVerified === "pending" ? true : false}
+              selected={row?.trainerVerified === "pending" ? true : false}
+              disabled={row?.trainerVerified === "pending" ? true : false}
             >
               Pending
             </option>
