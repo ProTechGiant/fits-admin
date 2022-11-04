@@ -10,7 +10,6 @@ export const getCategory = async () => {
     },
   })
     .then((response) => {
-      console.log("sfafadfasdf", response);
       return response.json();
     })
     .catch((err) => {

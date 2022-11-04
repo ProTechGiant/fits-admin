@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 
 const Edit = (props) => {
   const { show, handleClose } = props;
-  console.log("handle", show);
+
   const [role, setRole] = useState("");
   return (
     <>
@@ -56,22 +56,7 @@ const Edit = (props) => {
                 />
               </div>
             </div>
-            {/* <button
-              type="submit"
-              //   onClick={handleSubmit}
-              className="btn btn-danger mr-2"
-              style={{ width: "6rem" }}
-              disabled={isLoading ? "true" : null}
-            >
-              {isLoading ? (
-                <div
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                ></div>
-              ) : (
-                "Submit"
-              )}
-            </button> */}
+
             <button
               type="button"
               className="btn btn-light"

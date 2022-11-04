@@ -1,40 +1,17 @@
-import React, { useState } from "react";
 import { statusUpdate } from "../../helpers/status";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const StatusUpdate = (props) => {
-  const [state, setState] = useState("");
-  // const [status, setStatus] = useState("");
-  // const [orderId, setOrderId] = useState();
-
-  const { row, reload } = props;
-
+const StatusUpdate = ({ row, reload }) => {
   const ChangeState = (e, id) => {
     e.preventDefault();
-    // setStatus(e.target.value);
-    // setOrderId(id);
-    setState(e.target.value);
+
     StatusUpdateFunc(e.target.value, id);
   };
-
   const StatusUpdateFunc = async (status, Id) => {
-    console.log("status", status);
-    console.log("id", Id);
-    // let message;
-    // if (status == "approved") {
-    //   message = "Status is appoved";
-    // } else if (status == "disappoved") {
-    //   message = "Status is disappoved";
-    // } else if (status == "pending") {
-    //   message = "Status is pending";
-    // }
-    // console.log("message", message);
     try {
       await statusUpdate({ Id, status }).then((result) => {
-        console.log("status page", result);
-        // console.log("status page message", data?.message);
-        if (result.status == 201) {
+        if (result.data.statusCode === 200) {
           toast.success("status updated", {
             autoClose: 2000,
           });
@@ -60,6 +37,7 @@ const StatusUpdate = (props) => {
             id="orders"
             className="form-control"
             onChange={(e) => ChangeState(e, row?._id)}
+            defaultValue={row?.accountVerified}
           >
             <option
               value="disapproved"

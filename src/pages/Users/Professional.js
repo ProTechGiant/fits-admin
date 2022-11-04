@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { UPDATE_PROFESSION_DETAIL_BY_ID } from "../../reducers/userReducer";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const UserData = (props) => {
   const { profession } = props;
@@ -53,8 +52,6 @@ const UserData = (props) => {
   }; //...Delete Items...
 
   const delQualification = (e, id) => {
-    // let Qid = profession?.qualication[0]?.id;
-
     console.log("id for update in file", id);
     e.preventDefault();
     let oldQualification = [...qualification];
@@ -72,15 +69,6 @@ const UserData = (props) => {
   // ...fetching api...
   const UpdateUserDetail = () => {
     dispatch(UPDATE_PROFESSION_DETAIL_BY_ID(ForUpdate));
-    // if (profession?.mssage == "success") {
-    //   toast.success("status updated", {
-    //     autoClose: 2000,
-    //   });
-    // } else {
-    //   toast.error("something went wrong!", {
-    //     autoClose: 3000,
-    //   });
-    // }
   };
   return (
     <>
@@ -150,7 +138,6 @@ const UserData = (props) => {
                   width: "40px",
                   borderRadius: "4px",
                   marginTop: "17px",
-                  // borderRadius: "50px",
                   backgroundColor: "transparent",
                   objectFit: "cover",
                   border: "1px solid #5ba600",
@@ -159,7 +146,7 @@ const UserData = (props) => {
               >
                 +
               </button>
-              {data?.id == 1 ? (
+              {data?.id === 1 ? (
                 ""
               ) : (
                 <button

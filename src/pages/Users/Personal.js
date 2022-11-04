@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { UPDATE_PERSONAL_DETAIL_BY_ID } from "../../reducers/userReducer";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const UserData = (props) => {
   const { personal } = props;
@@ -28,15 +27,6 @@ const UserData = (props) => {
   const UpdateUserDetail = () => {
     dispatch(UPDATE_PERSONAL_DETAIL_BY_ID(ForUpdate));
     console.log("helooooooo bro");
-    // if (Response?.status == 201) {
-    //   toast.success("status updated", {
-    //     autoClose: 2000,
-    //   });
-    // } else {
-    //   toast.error("something went wrong!", {
-    //     autoClose: 3000,
-    //   });
-    // }
   };
   return (
     <>
@@ -61,7 +51,6 @@ const UserData = (props) => {
             <input
               type="date"
               className="form-control"
-              //   value={moment(birthDate).format("DD-MMM-YYYY")}
               value={moment(birthDate).format("yyyy-MM-dd")}
               onChange={(e) => {
                 setBirthDate(e.target.value);

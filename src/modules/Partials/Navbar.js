@@ -1,22 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import NetworkError from "../../Hoc/NetworkError";
-import Sidebar from "./Sidebar";
 import { toggleButton } from "../../reducers/authReducer";
-import { useSelector } from "react-redux";
 const Navbar = () => {
-  const { toggle } = useSelector((state) => state.user);
-  const [show, setShow] = useState();
   const [hide, setHide] = useState(false);
   const dispatch = useDispatch();
-  console.log("toggle", toggle);
 
   const ShowFun = () => {
     setHide(!hide);
     dispatch(toggleButton(hide));
-    // setHide(!toggle);
-    console.log("hello", hide);
   };
 
   return (
@@ -38,28 +32,7 @@ const Navbar = () => {
           type="button"
           data-toggle="minimize"
         ></button>
-        <ul className="navbar-nav mr-lg-2">
-          <li className="nav-item nav-search d-none d-lg-block">
-            <div className="input-group">
-              {/*  <div
-                  className="input-group-prepend hover-cursor"
-                  id="navbar-search-icon"
-                >
-                  <span className="input-group-text" id="search">
-                    <i className="icon-search"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="navbar-search-input"
-                  placeholder="Search now"
-                  aria-label="search"
-                  aria-describedby="search"
-              />*/}
-            </div>
-          </li>
-        </ul>
+
         <ul className="navbar-nav navbar-nav-right">
           <li className="nav-item dropdown">
             <a

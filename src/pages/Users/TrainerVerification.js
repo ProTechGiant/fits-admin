@@ -1,36 +1,17 @@
-import React, { useState } from "react";
-import { statusUpdate } from "../../helpers/status";
+import { TrainerVerification } from "../../helpers/status";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const StatusUpdate = (props) => {
-  const [state, setState] = useState("");
-
-  const { row, reload } = props;
-
+const StatusUpdate = ({ row, reload }) => {
   const ChangeState = (e, id) => {
     e.preventDefault();
-    setState(e.target.value);
     StatusUpdateFunc(e.target.value, id);
   };
 
   const StatusUpdateFunc = async (status, Id) => {
-    console.log("status", status);
-    console.log("id", Id);
-    let message;
-    if (status == "approved") {
-      message = "Status is appoved";
-    } else if (status == "disappoved") {
-      message = "Status is disappoved";
-    } else if (status == "pending") {
-      message = "Status is pending";
-    }
-    console.log("message", message);
     try {
-      await statusUpdate({ Id, status, message }).then((result) => {
-        console.log("status page", result);
-        // console.log("status page message", data?.message);
-        if (result.status == 201) {
+      await TrainerVerification({ Id, status }).then((result) => {
+        if (result?.statusCode === 200) {
           toast.success("status updated", {
             autoClose: 2000,
           });
@@ -56,25 +37,26 @@ const StatusUpdate = (props) => {
             id="orders"
             className="form-control"
             onChange={(e) => ChangeState(e, row?._id)}
+            value={row?.trainerVerified}
           >
             <option
               value="disapproved"
-              selected={row?.TrainerVerified === "disapproved" ? true : false}
-              disabled={row?.TrainerVerified === "disapproved" ? true : false}
+              selected={row?.trainerVerified === "disapproved" ? true : false}
+              disabled={row?.trainerVerified === "disapproved" ? true : false}
             >
               Disapproved
             </option>
             <option
               value="approved"
-              selected={row?.TrainerVerified === "approved" ? true : false}
-              disabled={row?.TrainerVerified === "approved" ? true : false}
+              selected={row?.trainerVerified === "approved" ? true : false}
+              disabled={row?.trainerVerified === "approved" ? true : false}
             >
               Approved
             </option>
             <option
               value="pending"
-              selected={row?.TrainerVerified === "pending" ? true : false}
-              disabled={row?.TrainerVerified === "pending" ? true : false}
+              selected={row?.trainerVerified === "pending" ? true : false}
+              disabled={row?.trainerVerified === "pending" ? true : false}
             >
               Pending
             </option>

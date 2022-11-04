@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetch2 } from "./helper/fetch";
-// import axios from "axios";
-// import { baseUrl } from "../config/baseUrl";
+
 export const initialState = {
   token: "",
   loading: false,
@@ -17,15 +16,9 @@ export const initialState = {
   chat: [],
 };
 
-export const signupUser = createAsyncThunk("signupuser", async (body) => {
-  // const result = await axios.post(`${baseUrl}/signup`, body);
-  // return result;
-});
+export const signupUser = createAsyncThunk("signupuser", async (body) => {});
 
-export const signinUser = createAsyncThunk("signinuser", async (body) => {
-  // const result = await fetch2("/api/login", body, "post");
-  // return body.token;
-});
+export const signinUser = createAsyncThunk("signinuser", async (body) => {});
 
 export const getUserId = createAsyncThunk("getuserid", async (body) => {
   const result = await fetch2("/getUserData", body, "post");
@@ -36,7 +29,6 @@ export const authReducer = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // login action
     loginPending: (state) => {
       state.loading = true;
     },
@@ -47,22 +39,16 @@ export const authReducer = createSlice({
       state.token = payload?.data?.access_token;
       state.user = payload.data.data;
       localStorage.setItem("access_token", payload?.data?.access_token);
-      console.log("reducer data", payload.data);
-      console.log("reducer token", payload?.data?.access_token);
     },
     loginFail: (state, { payload }) => {
       state.loading = false;
       state.error = payload.error;
-      console.log("reducer error", payload.error);
     },
     isMeAuth: (state, { payload }) => {
       state.isAuth = true;
       state.token = localStorage.getItem("access_token");
       state.user = payload?.data;
       localStorage.getItem("access_token");
-      console.log("reducer payload", payload);
-      console.log("reducer data", payload?.data);
-      console.log("reducer token", payload?.data?.access_token);
     },
     logoutMe: (state, action) => {
       state.token = null;

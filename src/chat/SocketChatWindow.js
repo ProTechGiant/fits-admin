@@ -18,11 +18,9 @@ const ChatWindow = ({ socket, username, room }) => {
           ":" +
           new Date(Date.now()).getMinutes(),
       };
-      console.log("message obje", messageData);
       await socket.emit("send_message", messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
-      console.log("message free", currentMessage);
     }
   };
 

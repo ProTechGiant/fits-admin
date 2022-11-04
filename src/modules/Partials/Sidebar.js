@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import { toggleButton } from "../../reducers/authReducer";
 const Sidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { pathname } = location;
-  console.log("location......", pathname);
   const { toggle } = useSelector((state) => state.user);
-  console.log("hideShow...", toggle);
+
   const [active, setActive] = useState();
   const handleClose = () => {
     dispatch(toggleButton(false));
-    // setActive(false);
   };
   return (
-    // {active ?}
     <nav
       className={`sidebar sidebar-offcanvas ${
         active || toggle ? "active" : ""
@@ -38,7 +34,7 @@ const Sidebar = () => {
         </li>
         <li
           className={`nav-item ${
-            pathname == "/admin/categories" ? "active" : ""
+            pathname === "/admin/categories" ? "active" : ""
           } `}
           onClick={() => handleClose()}
         >
@@ -59,7 +55,9 @@ const Sidebar = () => {
           </Link>
         </li>
         <li
-          className={`nav-item ${pathname == "/admin/orders" ? "active" : ""} `}
+          className={`nav-item ${
+            pathname === "/admin/orders" ? "active" : ""
+          } `}
           onClick={() => handleClose()}
         >
           <Link className="nav-link" to="/admin/orders">
@@ -67,20 +65,10 @@ const Sidebar = () => {
             <span className="menu-title">Orders</span>
           </Link>
         </li>
-        {/* <li
-          className={`nav-item ${
-            pathname == "/admin/transactions" ? "active" : ""
-          } `}
-        >
-          <Link className="nav-link" to="/admin/transactions">
-            <i className="icon-bar-graph menu-icon"></i>
-            <span className="menu-title">Transactions</span>
-            <i className="menu-arrow"></i> 
-          </Link>
-        </li>*/}
+
         <li
           className={`nav-item ${
-            pathname == "/admin/profile" ? "active" : ""
+            pathname === "/admin/profile" ? "active" : ""
           } `}
           onClick={() => handleClose()}
         >
@@ -89,15 +77,10 @@ const Sidebar = () => {
             <span className="menu-title">Profile</span>
           </Link>
         </li>
-        {/* <li className={`nav-item ${pathname == "#" ? "active" : ""} `}>
-          <Link className="nav-link" to="#">
-            <i className="icon-contract menu-icon"></i>
-            <span className="menu-title">Restaurant</span>
-          </Link>
-        </li>*/}
+
         <li
           className={`nav-item ${
-            pathname == "/admin/Challenges" ? "active" : ""
+            pathname === "/admin/Challenges" ? "active" : ""
           } `}
           onClick={() => handleClose()}
         >
@@ -106,30 +89,40 @@ const Sidebar = () => {
             <span className="menu-title">Challenges</span>
           </Link>
         </li>
-        {/* <li
-          className={`nav-item ${pathname == "/admin/users" ? "active" : ""} `}
-          onClick={() => handleClose()}
-        >
-          <Link className="nav-link" to="/admin/users">
-            <i className="icon-head menu-icon"></i>
-            <span className="menu-title">Users</span>
-          </Link>
-        </li> */}
-          <li className={`nav-item ${pathname == "/admin/users" ? "active" : ""} `}>
-            <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i className="icon-layout menu-icon"></i>
-              <span className="menu-title">Users</span>
-              <i className="menu-arrow"></i>
-            </a>
-            <div className="collapse" id="ui-basic">
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className="nav-link" to="/admin/users/trainer">Trainer</Link></li>
-                <li className="nav-item"> <Link className="nav-link" to="/admin/users/trainee">Trainee</Link></li>
-              </ul>
-            </div>
-          </li>
+
         <li
-          className={`nav-item ${pathname == "/logout" ? "active" : ""} `}
+          className={`nav-item ${pathname === "/admin/users" ? "active" : ""} `}
+        >
+          <a
+            className="nav-link"
+            data-toggle="collapse"
+            href="#ui-basic"
+            aria-expanded="false"
+            aria-controls="ui-basic"
+          >
+            <i className="icon-layout menu-icon"></i>
+            <span className="menu-title">Users</span>
+            <i className="menu-arrow"></i>
+          </a>
+          <div className="collapse" id="ui-basic">
+            <ul className="nav flex-column sub-menu">
+              <li className="nav-item">
+                {" "}
+                <Link className="nav-link" to="/admin/users/trainer">
+                  Trainer
+                </Link>
+              </li>
+              <li className="nav-item">
+                {" "}
+                <Link className="nav-link" to="/admin/users/trainee">
+                  Trainee
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li
+          className={`nav-item ${pathname === "/logout" ? "active" : ""} `}
           onClick={() => handleClose()}
         >
           <Link className="nav-link" to="/logout">
