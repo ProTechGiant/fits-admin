@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 function Edit(props) {
-  const { Row, show, handleClose } = props;
+  const { show, handleClose } = props;
   return (
     <>
       <Modal
