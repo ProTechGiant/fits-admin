@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const EmailVerify = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const [resetEmail, setResetEmail] = useState("");
   const [load, setLoad] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const url = "http://localhost:5000/api/email-send";
   const options = {
@@ -33,24 +29,18 @@ const EmailVerify = () => {
         },
         1000
       );
-      // history.push("/auth/VerifyEmail");
       setLoad(false);
     } else {
       try {
         fetch(url, options)
           .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            // dispatch(emailSend(data));
-          });
+          .then((data) => {});
 
-        // setResetEmail("");
         toast.success("Send code Successfully in your email", {
           autoClose: 1500,
         });
         setLoad(false);
         history.push({ pathname: "/auth/ForgotPassword", state: email });
-        // setTimeout(() => {}, 3000);
       } catch (error) {
         setLoad(false);
         setTimeout(() => {
@@ -60,7 +50,6 @@ const EmailVerify = () => {
         }, 1000);
         setLoad(false);
       }
-      // setLoad(false);
     }
   };
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Redirect,
   BrowserRouter as Router,
@@ -18,9 +18,10 @@ export function Routes() {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     handleMe();
   }, []);
+
   const handleMe = () => {
     setLoading(true);
     try {

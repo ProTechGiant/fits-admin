@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { toggleButton } from "../../reducers/authReducer";
 const Sidebar = () => {
   const location = useLocation();
@@ -9,21 +7,18 @@ const Sidebar = () => {
   const { pathname } = location;
   const { toggle } = useSelector((state) => state.user);
 
-  const [active, setActive] = useState();
   const handleClose = () => {
     dispatch(toggleButton(false));
   };
   return (
     <nav
-      className={`sidebar sidebar-offcanvas ${
-        active || toggle ? "active" : ""
-      }`}
+      className={`sidebar sidebar-offcanvas ${toggle ? "active" : ""}`}
       id="sidebar"
     >
       <ul className="nav ">
         <li
           className={`nav-item ${
-            pathname == "/admin/dashboard" ? `active ` : ""
+            pathname === "/admin/dashboard" ? `active ` : ""
           } `}
           onClick={() => handleClose()}
         >
@@ -45,7 +40,7 @@ const Sidebar = () => {
         </li>
         <li
           className={`nav-item ${
-            pathname == "/admin/products" ? "active" : ""
+            pathname === "/admin/products" ? "active" : ""
           } `}
           onClick={() => handleClose()}
         >

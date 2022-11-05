@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 const UserData = (props) => {
   const { personal } = props;
   const { id } = useParams();
-  console.log("personal", personal);
   const dispatch = useDispatch();
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
@@ -26,7 +25,6 @@ const UserData = (props) => {
   };
   const UpdateUserDetail = () => {
     dispatch(UPDATE_PERSONAL_DETAIL_BY_ID(ForUpdate));
-    console.log("helooooooo bro");
   };
   return (
     <>
@@ -105,20 +103,10 @@ const UserData = (props) => {
               id="gender"
               className="form-control"
               onChange={(e) => setGender(e.target.value)}
+              defaultValue={personal?.gender}
             >
-              {" "}
-              <option
-                defaultValue={personal?.gender}
-                selected={personal?.gender === "male" ? true : false}
-              >
-                Male
-              </option>
-              <option
-                defaultValue={personal?.gender}
-                selected={personal?.gender === "female" ? true : false}
-              >
-                Female
-              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </div>
         </div>

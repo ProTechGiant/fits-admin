@@ -6,11 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 const UserData = (props) => {
   const { profession } = props;
   useEffect(() => {
-    console.log();
     setQualification(profession?.qualification);
   }, [props, profession]);
   const { id } = useParams();
-  console.log("profession", profession);
   const dispatch = useDispatch();
   const [experienceNote, setExperienceNote] = useState("");
   const [experienceYear, setExperienceYear] = useState(0);
@@ -21,7 +19,6 @@ const UserData = (props) => {
       degree_note: "",
     },
   ]);
-  console.log("qualification,......", qualification);
 
   //.......................... Update date...............................//
   const addQualification = (e) => {
@@ -34,7 +31,6 @@ const UserData = (props) => {
     };
     oldQualification.push(newQualification);
     setQualification(oldQualification);
-    console.log("id>>>>", id);
   };
 
   //...Update(degree)...
@@ -44,18 +40,15 @@ const UserData = (props) => {
     setQualification(oldQualification);
   }; //...Update(degree_note)...
   const upDegreeNote = (index, value) => {
-    console.log("idnex", index);
-    console.log("value", value);
     let oldQualification = [...qualification];
     oldQualification[index].degree_note = value;
     setQualification(oldQualification);
   }; //...Delete Items...
 
   const delQualification = (e, id) => {
-    console.log("id for update in file", id);
     e.preventDefault();
     let oldQualification = [...qualification];
-    var NewDataForQualification = oldQualification.filter(
+    let NewDataForQualification = oldQualification.filter(
       (task) => task.id !== id
     );
     setQualification(NewDataForQualification);

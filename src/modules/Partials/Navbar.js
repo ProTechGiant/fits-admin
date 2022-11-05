@@ -18,7 +18,6 @@ const Navbar = () => {
       <NetworkError />
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center ">
         <Link className="navbar-brand brand-logo mr-5" to="/">
-          {/* <img src="/assets/images/logo.svg" className="mr-2" alt="logo" /> */}
           <h2>Wegoz</h2>
         </Link>
         <Link className="navbar-brand brand-logo-mini" to="/">

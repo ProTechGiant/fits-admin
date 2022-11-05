@@ -5,7 +5,6 @@ import { customStyles } from "../../modules/styles/customStyles";
 import DataTable from "react-data-table-component";
 import Delete from "./Delete";
 import CreateTable from "./createTable";
-// import { data } from "./Data";
 import { getCategory } from "../../helpers/category";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

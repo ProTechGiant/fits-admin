@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OTPInput from "otp-input-react";
 import { useHistory } from "react-router-dom";
 const ForgotPassword = (props) => {
   console.log("props", props.location.state);
@@ -27,12 +27,11 @@ const ForgotPassword = (props) => {
     console.log("hello");
     setLoading(true);
     try {
-      // setLoad(true);
       fetch(url, options)
         .then((response) => response.json())
         .then((data) => {
           console.log("data", data);
-          if (!data == "") {
+          if (!data === "") {
             toast.success(
               "Code verify",
               {
@@ -53,13 +52,7 @@ const ForgotPassword = (props) => {
           }
           setLoading(false);
         });
-
-      // setForgot(true);
-      // setLoad(false);
-      // setResetEmail("");
     } catch (error) {
-      // console.log("error", error);
-      // setLoad(false);
       setTimeout(() => {
         toast.error("Code error", {
           autoClose: 1500,
@@ -68,16 +61,7 @@ const ForgotPassword = (props) => {
       setLoading(false);
     }
   };
-  const renderButton = (buttonProps) => {
-    return (
-      <button {...buttonProps} className="btn btn-outline-light text-dark">
-        Resend
-      </button>
-    );
-  };
-  const renderTime = (remainingTime) => {
-    return <span>{remainingTime} seconds remaining</span>;
-  };
+
   return (
     <>
       <div className="container-scroller">
@@ -109,7 +93,6 @@ const ForgotPassword = (props) => {
                         type="submit"
                         className="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn"
                         onClick={() => Handle()}
-                        // onClick={(e) => handleSubmit(e)}
                         disabled={loading ? "true" : null}
                       >
                         {loading ? (

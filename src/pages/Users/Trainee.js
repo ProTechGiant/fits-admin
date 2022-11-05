@@ -61,6 +61,7 @@ const Trainer = () => {
       name: "Email",
       sortable: true,
       width: "170px",
+      cell: (row) => row?.email,
     },
 
     {

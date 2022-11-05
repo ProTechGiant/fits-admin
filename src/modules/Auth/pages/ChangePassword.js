@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 const ChangePassword = (props) => {
-  console.log("props........", props);
-  //   const { changePassword, code, email } = props;
-
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -35,7 +32,7 @@ const ChangePassword = (props) => {
   };
   const handleSubmit = () => {
     console.log("hellllll");
-    if (password == "") {
+    if (password === "") {
       setTimeout(() => {
         toast.error("New Password is empty", {
           autoClose: 1500,
@@ -46,8 +43,7 @@ const ChangePassword = (props) => {
         fetch(url, options)
           .then((response) => response.json())
           .then((data) => {
-            console.log("data.........", data);
-            if (data == "Update Success") {
+            if (data === "Update Success") {
               setTimeout(() => {
                 toast.success("Password Change Successfully ", {
                   autoClose: 1500,
@@ -107,35 +103,12 @@ const ChangePassword = (props) => {
 
                 <div className="mt-3">
                   <button
-                    // type="submit"
                     className="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn"
                     onClick={(e) => handleSubmit()}
-                    disabled={loading ? "true" : null}
                   >
-                    {loading ? (
-                      <div
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                      ></div>
-                    ) : (
-                      "Change Password"
-                    )}
+                    Change Password
                   </button>
                 </div>
-                {/* <div className="my-2 d-flex justify-content-between align-items-center">
-                 <div className="form-check">
-                    <label className="form-check-label text-muted">
-                      <input type="checkbox" className="form-check-input" />
-                      Keep me signed in
-                    </label>
-                  </div> 
-                  <Link
-                    to="/auth/forgot-password"
-                    className="auth-link text-black"
-                  >
-                    Forgot password?
-                  </Link>
-                </div> */}
               </div>
             </div>
           </div>

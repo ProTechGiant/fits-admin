@@ -37,25 +37,23 @@ const StatusUpdate = ({ row, reload }) => {
             id="orders"
             className="form-control"
             onChange={(e) => ChangeState(e, row?._id)}
-            value={row?.trainerVerified}
+            // value={row?.trainerVerified}
+            defaultValue={row?.trainerVerified}
           >
             <option
               value="disapproved"
-              selected={row?.trainerVerified === "disapproved" ? true : false}
               disabled={row?.trainerVerified === "disapproved" ? true : false}
             >
               Disapproved
             </option>
             <option
               value="approved"
-              selected={row?.trainerVerified === "approved" ? true : false}
               disabled={row?.trainerVerified === "approved" ? true : false}
             >
               Approved
             </option>
             <option
               value="pending"
-              selected={row?.trainerVerified === "pending" ? true : false}
               disabled={row?.trainerVerified === "pending" ? true : false}
             >
               Pending

@@ -9,7 +9,6 @@ import User from "./User";
 
 const UserData = () => {
   const { id } = useParams();
-  console.log("idddddd", id);
   const dispatch = useDispatch();
   const [key, setKey] = useState("");
   const { personal_info, profession_info, user_info } = useSelector(
@@ -23,10 +22,6 @@ const UserData = () => {
   useEffect(() => {
     GetUserDetail();
   }, []);
-
-  console.log("personal", personal_info);
-  console.log("profession_info", profession_info);
-  console.log("user_info", user_info);
 
   return (
     <>

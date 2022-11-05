@@ -1,5 +1,3 @@
-import { IDataTableStyles } from "react-data-table-component";
-
 export const customStyles = {
   table: {
     style: {

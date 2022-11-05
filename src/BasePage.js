@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import SplashScreen from "./modules/Partials/SplashScreen";
-import ProfileUpdate from "./pages/Profile/ProfileUpdate";
 
 const DashboardPage = lazy(() => import("./pages/dashboard/"));
 const ProfilePage = lazy(() => import("./pages/Profile/Profile"));

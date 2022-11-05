@@ -1,19 +1,18 @@
 import { baseUrl } from "../config/baseUrl";
 
 export const login = async (body) => {
-  return await fetch(`${baseUrl}/api/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const response = await fetch(`${baseUrl}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const authenticate = (data, next) => {
@@ -35,32 +34,30 @@ export const isAuthenticated = () => {
 };
 
 export const me = async () => {
-  return await fetch(`${baseUrl}/api/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const response = await fetch(`${baseUrl}/api/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
     });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
 };
 export const totalRecords = async () => {
-  return await fetch(`${baseUrl}/api/records/total`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const response = await fetch(`${baseUrl}/api/records/total`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
     });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
 };

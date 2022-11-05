@@ -1,32 +1,22 @@
 import React, { useState } from "react";
 import "./Login.css";
-import axios from "axios";
 import {
   loginPending,
   loginFail,
   loginSuccess,
-  emailSend,
 } from "../../../reducers/authReducer";
-import { Link, useHistory } from "react-router-dom";
-import { Button, ButtonGroup, textDecoration } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { login, authenticate } from "../../../helpers/auth";
-import { Spinner } from "@chakra-ui/react";
-import { disabled } from "express/lib/application";
-// import { Link } from "react-router-dom";
-import ForgotPassword from "./ForgotPassword";
-import { baseUrl } from "../../../config/baseUrl";
 toast.configure();
 
 const Login = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const [passwordShown, setPasswordShown] = useState(false);
   const [password, setPassword] = useState();
-  const [forgot, setForgot] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +33,6 @@ const Login = () => {
     console.log("email ", email, " password: ", password);
 
     try {
-      // setValues({ ...values, error: false, loading: true });
       login({ email, password }).then((data) => {
         if (data?.message === "success") {
           authenticate(data, () => {
@@ -84,7 +73,6 @@ const Login = () => {
               <div className="col-lg-4 mx-auto">
                 <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                   <div className="brand-logo">
-                    {/* <img src="/assets/images/logo2.png" alt="logo" /> */}
                     <h3>Wegoz</h3>
                   </div>
                   <h4>Hello! let's get started</h4>
@@ -123,99 +111,7 @@ const Login = () => {
                         ></span>
                       )}
                     </div>
-                    {/* <h6
-                      className="font-weight-light text-success"
-                      style={{ cursor: "pointer", textDecoration: "none" }}
-                    >
-                      <Link
-                        to="/auth/VerifyEmail"
-                        style={{ cursor: "pointer", textDecoration: "none" }}
-                      >
-                        Forgot Password.
-                      </Link>
-                    </h6> */}
-                    {/* <div
-                      className="modal fade"
-                      id="exampleModal"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              Send Otp on your email
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <div className="container">
-                              <div className="row">
-                                <div className="col-sm-12 col-12 col-lg-12">
-                                  <label
-                                    style={{
-                                      fontFamily: "BhuTuka Expanded One",
-                                    }}
-                                  >
-                                    Email
-                                  </label>
-                                </div>
-                                <div className="col-sm-12 col-12 col-lg-12 mt-2">
-                                  <input
-                                    placeholder="Enter email here..."
-                                    type="email"
-                                    pattern="[^ @]*@[^ @]*"
-                                    className="bg bg-light text-dark w-75"
-                                    style={{
-                                      outline: "none",
-                                      border: "none",
-                                      borderBottom: "1px solid blue",
-                                    }}
-                                    onChange={(e) =>
-                                      setResetEmail(e.target.value)
-                                    }
-                                    value={resetEmail}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-danger"
-                              onClick={() => handleForgot()}
-                            >
-                              {load ? (
-                                <div
-                                  className="spinner-border spinner-border-sm"
-                                  role="status"
-                                ></div>
-                              ) : (
-                                ""
-                              )}
-                              Send
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
+
                     <div className="mt-3">
                       <button
                         type="submit"
@@ -233,20 +129,6 @@ const Login = () => {
                         )}
                       </button>
                     </div>
-                    {/* <div className="my-2 d-flex justify-content-between align-items-center">
-                   <div className="form-check">
-                      <label className="form-check-label text-muted">
-                        <input type="checkbox" className="form-check-input" />
-                        Keep me signed in
-                      </label>
-                    </div> 
-                    <Link
-                      to="/auth/forgot-password"
-                      className="auth-link text-black"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div> */}
                   </form>
                 </div>
               </div>

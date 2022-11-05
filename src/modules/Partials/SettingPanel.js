@@ -7,12 +7,11 @@ const SettingPanel = () => {
   const dispatch = useDispatch();
   const { toggleChat } = useSelector((state) => state.user);
 
-  const [hide, setHide] = useState(false);
   const [hover, setHover] = useState(true);
 
   const SettingFun = () => {
-    dispatch(toggleChatButton(hide));
-    setHover(true);
+    dispatch(toggleChatButton(hover));
+    setHover(!hover);
   };
   return (
     <>
