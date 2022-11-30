@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 const ChangePassword = (props) => {
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -13,9 +12,8 @@ const ChangePassword = (props) => {
   };
   useEffect(() => {
     setCode(props.location.state.OTP);
-    console.log("...code", code);
+
     setEmail(props.location.state.email);
-    console.log("emailsend", email);
   }, []);
   const url = "http://localhost:5000/api/change-password";
   const options = {

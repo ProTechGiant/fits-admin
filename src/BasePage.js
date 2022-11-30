@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
+import ErrorPage from "./modules/Errors/ErrorPage";
 import SplashScreen from "./modules/Partials/SplashScreen";
 
 const DashboardPage = lazy(() => import("./pages/dashboard/"));
@@ -8,11 +9,6 @@ const ProfileUpdatePage = lazy(() => import("./pages/Profile/ProfileUpdate"));
 const Trainer = lazy(() => import("./pages/Users/Trainer"));
 const Trainee = lazy(() => import("./pages/Users/Trainee"));
 const UserData = lazy(() => import("./pages/Users/UserData"));
-const ProductIndex = lazy(() => import("./pages/Products/Products"));
-const CategoriesPage = lazy(() => import("./pages/Categories/Category"));
-const OrderPage = lazy(() => import("./pages/Order/Order"));
-const TransactionPage = lazy(() => import("./pages/Transaction/Transaction"));
-const ChallengesPage = lazy(() => import("./pages/challenges/Challenges"));
 
 export default function BasePage() {
   return (
@@ -23,19 +19,15 @@ export default function BasePage() {
           <Redirect exact from="/" to="/admin/dashboard" />
         }
 
-        <Route exact path="/admin/transactions" component={TransactionPage} />
-        <Route exact path="/admin/orders" component={OrderPage} />
-        <Route exact path="/admin/categories" component={CategoriesPage} />
-        <Route exact path="/admin/products" component={ProductIndex} />
         <Route exact path="/admin/users/trainee" component={Trainee} />
         <Route exact path="/admin/users/trainer" component={Trainer} />
         <Route exact path="/admin/:role/:id" component={UserData} />
         <Route exact path="/admin/profile" component={ProfilePage} />
         <Route exact path="/admin/dashboard" component={DashboardPage} />
         <Route exact path="/admin/Upprofile" component={ProfileUpdatePage} />
-        <Route exact path="/admin/Challenges" component={ChallengesPage} />
+        <Route exact path="/error" component={ErrorPage} />
 
-        <Redirect to="error" />
+        <Redirect to="/error" />
       </Switch>
     </Suspense>
   );

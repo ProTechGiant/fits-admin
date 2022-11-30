@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import NetworkError from "../../Hoc/NetworkError";
 import { toggleButton } from "../../reducers/authReducer";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { Info, Menu, Person2, Settings } from "@mui/icons-material";
+
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 const Navbar = () => {
   const [hide, setHide] = useState(false);
   const dispatch = useDispatch();
@@ -18,7 +24,7 @@ const Navbar = () => {
       <NetworkError />
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center ">
         <Link className="navbar-brand brand-logo mr-5" to="/">
-          <h2>Wegoz</h2>
+          <h2>Fits Admin</h2>
         </Link>
         <Link className="navbar-brand brand-logo-mini" to="/">
           <img src="/assets/images/logo-mini.svg" alt="logo" />
@@ -40,11 +46,12 @@ const Navbar = () => {
               href="#"
               data-toggle="dropdown"
             >
-              <i className="icon-bell mx-0"></i>
+              <NotificationsNoneIcon className="mx-0" />
+
               <span className="count"></span>
             </a>
             <div
-              className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list border border-danger"
+              className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
               aria-labelledby="notificationDropdown "
             >
               <p className="mb-0 font-weight-normal float-left dropdown-header">
@@ -53,6 +60,7 @@ const Navbar = () => {
               <a className="dropdown-item preview-item">
                 <div className="preview-thumbnail">
                   <div className="preview-icon bg-success">
+                    <Info />
                     <i className="ti-info-alt mx-0"></i>
                   </div>
                 </div>
@@ -68,7 +76,7 @@ const Navbar = () => {
               <a className="dropdown-item preview-item">
                 <div className="preview-thumbnail">
                   <div className="preview-icon bg-warning">
-                    <i className="ti-settings mx-0"></i>
+                    <Settings className="mx-0" />
                   </div>
                 </div>
                 <div className="preview-item-content">
@@ -83,7 +91,7 @@ const Navbar = () => {
               <a className="dropdown-item preview-item">
                 <div className="preview-thumbnail">
                   <div className="preview-icon bg-info">
-                    <i className="ti-user mx-0"></i>
+                    <Person2 />
                   </div>
                 </div>
                 <div className="preview-item-content">
@@ -111,29 +119,29 @@ const Navbar = () => {
               aria-labelledby="profileDropdown"
             >
               <a className="dropdown-item">
-                <i className="ti-settings text-danger"></i>
+                <Settings className="text-danger mx-2" />
                 Settings
               </a>
-              <Link className="nav-link" to="/logout">
-                <a className="dropdown-item">
-                  <i className="ti-power-off text-danger"></i>
+              <Link className="nav-link " to="/logout">
+                <p className="dropdown-item">
+                  <PowerSettingsNewIcon className="text-danger mx-2" />
                   Logout
-                </a>
+                </p>
               </Link>
             </div>
           </li>
           <li className="nav-item nav-settings d-none d-lg-flex">
-            <a className="nav-link" href="#">
-              <i className="icon-ellipsis" onClick={() => ShowFun()}></i>
-            </a>
+            <MoreHorizIcon onClick={() => ShowFun()} />
           </li>
         </ul>
         <button
-          className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+          className="navbar-toggler navbar-toggler-right d-lg-none align-self-center mr-3"
           type="button"
           data-toggle="offcanvas"
         >
-          <span className="icon-menu" onClick={() => ShowFun()}></span>
+          <span className="icon-menu text-center" onClick={() => ShowFun()}>
+            <Menu />
+          </span>
         </button>
       </div>
     </nav>

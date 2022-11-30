@@ -16,7 +16,6 @@ const Transaction = () => {
               type="button"
               class="btn btn-danger"
               style={{ float: "right", margin: "0 0 20px 0" }}
-              // onClick={() => handleAddShow()}
             >
               Add Transaction
             </button>

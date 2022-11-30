@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
 import { totalRecords } from "../../helpers/auth";
 import SplashScreen from "../../modules/Partials/SplashScreen";
 import { GET_USER_DATA } from "../../reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { LightMode } from "@mui/icons-material";
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -13,7 +16,7 @@ const Dashboard = () => {
     setIsLoading(true);
     handleMe();
     dispatch(GET_USER_DATA());
-  }, [dispatch]);
+  }, []);
 
   const handleMe = () => {
     setIsLoading(true);
@@ -53,7 +56,7 @@ const Dashboard = () => {
                 <div className="d-flex">
                   <div>
                     <h2 className="mb-0 font-weight-normal">
-                      <i className="icon-sun mr-2"></i>31<sup>C</sup>
+                      <LightMode className="text-warning" /> 31<sup>C</sup>
                     </h2>
                   </div>
                   <div className="ml-2">

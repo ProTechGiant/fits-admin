@@ -14,6 +14,7 @@ export const initialState = {
   userId: "",
   rname: "",
   chat: [],
+  personalInfo: [],
 };
 
 export const signupUser = createAsyncThunk("signupuser", async (body) => {});
@@ -33,21 +34,28 @@ export const authReducer = createSlice({
       state.loading = true;
     },
     loginSuccess: (state, { payload }) => {
+      console.log("auth", payload.data);
       state.loading = false;
       state.isAuth = true;
       state.error = "";
-      state.token = payload?.data?.access_token;
-      state.user = payload.data.data;
-      localStorage.setItem("access_token", payload?.data?.access_token);
+      state.token = payload?.access_token;
+      state.user = payload.data;
+      localStorage.setItem("access_token", payload?.access_token);
     },
     loginFail: (state, { payload }) => {
       state.loading = false;
       state.error = payload.error;
     },
     isMeAuth: (state, { payload }) => {
+      console.log("payload", payload);
       state.isAuth = true;
       state.token = localStorage.getItem("access_token");
       state.user = payload?.data;
+      localStorage.getItem("access_token");
+    },
+
+    personalInfo: (state, { payload }) => {
+      state.personalInfo = payload?.data;
       localStorage.getItem("access_token");
     },
     logoutMe: (state, action) => {
@@ -69,9 +77,11 @@ export const authReducer = createSlice({
   extraReducers: {},
 });
 export const {
+  userPersonal,
   addToken,
   logoutMe,
   isMeAuth,
+  personalInfo,
   registerPending,
   registerSuccess,
   registerFail,

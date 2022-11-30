@@ -1,11 +1,8 @@
 import { baseUrl } from "../config/baseUrl";
 
-export const statusUpdate = async (body) => {
-  console.log("helpers body", body);
-  const { Id, status, message } = body;
-  console.log("helpers id", Id);
-  console.log("helpers status", status);
-  return await fetch(`${baseUrl}/api/admin/user/${Id}`, {
+export const statusUpdate = (body) => {
+  const { Id, status } = body;
+  return fetch(`${baseUrl}/api/admin/user/${Id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -19,17 +16,16 @@ export const statusUpdate = async (body) => {
         status: response.status,
         data,
       };
-      console.log("status helpers page", response);
       return result;
     })
     .catch((err) => {
       console.log(err);
     });
 };
-export const TrainerVerification = async (body) => {
+export const TrainerVerification = (body) => {
   const { Id, status } = body;
 
-  return await fetch(`${baseUrl}/api/admin/trainer/status/${Id}`, {
+  return fetch(`${baseUrl}/api/admin/trainer/status/${Id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
-import ScrollToBottom from "react-scroll-to-bottom";
-import { useSelector } from "react-redux";
 const ChatWindow = ({ socket, username, room }) => {
-  const { user } = useSelector((state) => state.user);
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
@@ -50,30 +47,10 @@ const ChatWindow = ({ socket, username, room }) => {
                                 <small>{messageContent.time}</small>
                               </p>
                             </div>
-                            {/* <div
-                                className="avatar"
-                                style={{
-                                  padding: "0px 0px 0px 10px !important",
-                                }}
-                              >
-                                <img
-                                  className="img-circle"
-                                  style={{ width: "100%" }}
-                                  src=""
-                                />
-                              </div> */}
                           </div>
                         </li>
                       ) : (
                         <div className="msj macro ">
-                          {/* <div className="avatar">
-                             <img
-                                className="img-circle"
-                                style={{ width: "100%" }}
-                                src="'+ me.avatar +'"
-                              /> 
-                          </div>*/}
-
                           <div className="text text-l ">
                             <small>{messageContent.author}</small>
                             <p className="text-msg">{messageContent.message}</p>
@@ -100,17 +77,12 @@ const ChatWindow = ({ socket, username, room }) => {
           style={{
             borderRadius: "50px",
             padding: "15px",
-            // marginBottom: "10px",
-            // overflowX: "hidden",
-            // overflowY: "scroll",
+
             height: "1.8rem",
             justifyContent: "space-around",
             border: "none",
             outline: "none",
-            // border: "2px solid silver",
-            // textAlign: "center",
-            // justifyContent: "center",
-            // alignItems: "center",
+
             width: "90%",
             background: "black",
             color: "white",
@@ -126,7 +98,6 @@ const ChatWindow = ({ socket, username, room }) => {
         />
 
         <button
-          // className="submit  "
           style={{
             float: "right",
 
@@ -136,7 +107,6 @@ const ChatWindow = ({ socket, username, room }) => {
             borderRadius: "50%",
 
             position: "relative",
-            // height: "1rem",
           }}
           onClick={sendMessage}
         >

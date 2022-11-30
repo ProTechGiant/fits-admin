@@ -1,6 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleButton } from "../../reducers/authReducer";
+import WindowIcon from "@mui/icons-material/Window";
+import GroupIcon from "@mui/icons-material/Group";
+import SportsGymnasticsIcon from "@mui/icons-material/SportsGymnastics";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { FitnessCenter, PowerSettingsNew, Task } from "@mui/icons-material";
 const Sidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -23,41 +29,8 @@ const Sidebar = () => {
           onClick={() => handleClose()}
         >
           <Link className="nav-link " to="/admin/dashboard">
-            <i className="icon-grid menu-icon"></i>
+            <WindowIcon className="mr-2" />
             <span className="menu-title">Dashboard</span>
-          </Link>
-        </li>
-        <li
-          className={`nav-item ${
-            pathname === "/admin/categories" ? "active" : ""
-          } `}
-          onClick={() => handleClose()}
-        >
-          <Link className="nav-link" to="/admin/categories">
-            <i className="icon-paper menu-icon"></i>
-            <span className="menu-title">Categories</span>
-          </Link>
-        </li>
-        <li
-          className={`nav-item ${
-            pathname === "/admin/products" ? "active" : ""
-          } `}
-          onClick={() => handleClose()}
-        >
-          <Link className="nav-link" to="/admin/products">
-            <i className="icon-layout menu-icon"></i>
-            <span className="menu-title">Products</span>
-          </Link>
-        </li>
-        <li
-          className={`nav-item ${
-            pathname === "/admin/orders" ? "active" : ""
-          } `}
-          onClick={() => handleClose()}
-        >
-          <Link className="nav-link" to="/admin/orders">
-            <i className="icon-columns menu-icon"></i>
-            <span className="menu-title">Orders</span>
           </Link>
         </li>
 
@@ -68,20 +41,8 @@ const Sidebar = () => {
           onClick={() => handleClose()}
         >
           <Link className="nav-link" to="/admin/profile">
-            <i className="icon-grid-2 menu-icon"></i>
+            <AccountCircleIcon className="mr-2" />
             <span className="menu-title">Profile</span>
-          </Link>
-        </li>
-
-        <li
-          className={`nav-item ${
-            pathname === "/admin/Challenges" ? "active" : ""
-          } `}
-          onClick={() => handleClose()}
-        >
-          <Link className="nav-link" to="/admin/Challenges">
-            <i className="fa fa-tasks menu-icon" aria-hidden="true"></i>
-            <span className="menu-title">Challenges</span>
           </Link>
         </li>
 
@@ -95,21 +56,22 @@ const Sidebar = () => {
             aria-expanded="false"
             aria-controls="ui-basic"
           >
-            <i className="icon-layout menu-icon"></i>
+            <GroupIcon className="mr-3" />
+
             <span className="menu-title">Users</span>
-            <i className="menu-arrow"></i>
+            <ArrowDropDownIcon className="ml-5" />
           </a>
           <div className="collapse" id="ui-basic">
-            <ul className="nav flex-column sub-menu">
+            <ul className="nav flex-column my-0 ">
               <li className="nav-item">
-                {" "}
                 <Link className="nav-link" to="/admin/users/trainer">
+                  <FitnessCenter className="mr-3" />
                   Trainer
                 </Link>
               </li>
               <li className="nav-item">
-                {" "}
                 <Link className="nav-link" to="/admin/users/trainee">
+                  <SportsGymnasticsIcon className="mr-3" />
                   Trainee
                 </Link>
               </li>
@@ -121,7 +83,7 @@ const Sidebar = () => {
           onClick={() => handleClose()}
         >
           <Link className="nav-link" to="/logout">
-            <i className="icon-paper menu-icon"></i>
+            <PowerSettingsNew className="mr-2" />
             <span className="menu-title">Logout</span>
           </Link>
         </li>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 function Edit(props) {
-  const { Row, show, handleClose } = props;
+  const { show, handleClose } = props;
   return (
     <>
       <Modal
@@ -39,7 +39,7 @@ function Edit(props) {
             <> </>
             <button
               type="submit"
-              onClick={handleClose} // () => handleSubmit()
+              onClick={handleClose}
               className="btn btn-danger btn-elevate"
             >
               Save

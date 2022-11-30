@@ -66,7 +66,7 @@ const Trainer = () => {
       width: "100px",
       cell: (row, index) => (
         <img
-          class="rounded-circle"
+          className="rounded-circle"
           width="40px"
           alt="img-notFound"
           src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
@@ -146,7 +146,7 @@ const Trainer = () => {
             <Link to={`/admin/${row?.role}/${row?._id}`}>
               <button
                 type="button"
-                class="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
+                className="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
                 onClick={() => HandleEditShow(row)}
               ></button>
             </Link>
@@ -160,7 +160,7 @@ const Trainer = () => {
       <div className="card">
         <div className="card-body">
           <div
-            class="row "
+            className="row "
             style={{
               border: "2px solid #ffff",
               borderRadius: "10px",
@@ -176,15 +176,16 @@ const Trainer = () => {
             <div className="col-12 col-xl-4 col-md-4 mb-4 mb-xl-0">
               <div className="row">
                 <div className="col-12 input-container">
-                  <div className="form-group">
+                  <div className="form-group text-center">
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm "
                       placeholder="Search product by name "
                       onChange={(e) => onChange(e)}
                       value={seaching}
                     />
+
                     <span
-                      className="fas fa-times fa-1x field-icon  px-3 "
+                      className={`fa fa-close fa-1x field-icon px-4`}
                       onClick={() => handleRemoveFilter()}
                     ></span>
                   </div>

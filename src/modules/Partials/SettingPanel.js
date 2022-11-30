@@ -3,6 +3,7 @@ import "../../chat/Chat.css";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChatButton } from "../../reducers/authReducer";
 import Chat from "../../chat/Chat";
+import { Settings } from "@mui/icons-material";
 const SettingPanel = () => {
   const dispatch = useDispatch();
   const { toggleChat } = useSelector((state) => state.user);
@@ -17,7 +18,8 @@ const SettingPanel = () => {
     <>
       <div className="theme-setting-wrapper ">
         <div id="settings-trigger">
-          <i className="ti-settings"></i>
+          <Settings className="ti-settings text-white" />
+          {/* <i className="ti-settings"></i> */}
         </div>
         <div id="theme-settings" className="settings-panel">
           <i className="settings-close ti-close"></i>

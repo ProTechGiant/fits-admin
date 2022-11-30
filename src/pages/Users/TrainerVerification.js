@@ -11,7 +11,7 @@ const StatusUpdate = ({ row, reload }) => {
   const StatusUpdateFunc = async (status, Id) => {
     try {
       await TrainerVerification({ Id, status }).then((result) => {
-        if (result?.statusCode === 200) {
+        if (result?.trainerVerified) {
           toast.success("status updated", {
             autoClose: 2000,
           });

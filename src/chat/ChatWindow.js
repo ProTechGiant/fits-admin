@@ -1,38 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Chat.css";
-import ScrollToBottom from "react-scroll-to-bottom";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../config/baseUrl";
 const ChatWindow = ({ messageList, setMessageList }) => {
   const { roomId, user, userId, rname } = useSelector((state) => state.user);
   const [currentMessage, setCurrentMessage] = useState("");
-  // const [messageList, setMessageList] = useState([]);
-
-  // const sendMessage = async () => {
-  //   if (currentMessage !== "") {
-  //     const messageData = {
-  //       room: room,
-  //       author: username,
-  //       message: currentMessage,
-  //       time:
-  //         new Date(Date.now()).getHours() +
-  //         ":" +
-  //         new Date(Date.now()).getMinutes(),
-  //     };
-  //     console.log("message obje", messageData);
-  //     await socket.emit("send_message", messageData);
-  //     setMessageList((list) => [...list, messageData]);
-  //     setCurrentMessage("");
-  //     console.log("message free", currentMessage);
-  //   }
-  // };
 
   const sendMessage = async (event) => {
     event.preventDefault();
-    console.log("hello brother", currentMessage);
-    // setLoading(false);
 
-    // scrollToBottom();
     const messageData = {
       roomId,
       senderId: user._id,
@@ -51,27 +27,14 @@ const ChatWindow = ({ messageList, setMessageList }) => {
     })
       .then((res) => res.json())
       .then((res2) => {
-        console.log("here is res2 of message", res2);
         setCurrentMessage("");
-        // setMessageList((list) => [...list, messageData]);
-
-        // setCurrentMessage("");
       })
-      // .catch(
-      //   (err) => setLoading(false);
 
-      //   console.log(err)
-      // );
       .catch((err) => {
         console.log("error", err);
       });
   };
 
-  // useEffect(() => {
-  //   socket.on("receive_message", (data) => {
-  //     setMessageList((list) => [...list, data]);
-  //   });
-  // }, [socket]);
   return (
     <div className="row">
       <div className="col-sm-12 col-12">
@@ -87,37 +50,15 @@ const ChatWindow = ({ messageList, setMessageList }) => {
                           <div className="msj-rta macro">
                             <div className="text text-r">
                               <p className="text-msg">{messageContent.mes}</p>
-                              <p>
-                                {/* <small>{messageContent.time}</small> */}
-                              </p>
+                              <p></p>
                             </div>
-                            {/* <div
-                                className="avatar"
-                                style={{
-                                  padding: "0px 0px 0px 10px !important",
-                                }}
-                              >
-                                <img
-                                  className="img-circle"
-                                  style={{ width: "100%" }}
-                                  src=""
-                                />
-                              </div> */}
                           </div>
                         </li>
                       ) : (
                         <div className="msj macro ">
-                          {/* <div className="avatar">
-                             <img
-                                className="img-circle"
-                                style={{ width: "100%" }}
-                                src="'+ me.avatar +'"
-                              /> 
-                          </div>*/}
-
                           <div className="text text-l ">
                             <small>
-                              {messageContent.receiverId == user._id
+                              {messageContent.receiverId === user._id
                                 ? messageContent.receiverName
                                 : messageContent.senderName}
                             </small>
@@ -143,17 +84,11 @@ const ChatWindow = ({ messageList, setMessageList }) => {
           style={{
             borderRadius: "50px",
             padding: "15px",
-            // marginBottom: "10px",
-            // overflowX: "hidden",
-            // overflowY: "scroll",
-            // height: "1.8rem",
+
             justifyContent: "space-around",
             border: "none",
             outline: "none",
-            // border: "2px solid silver",
-            // textAlign: "center",
-            // justifyContent: "center",
-            // alignItems: "center",
+
             width: "90%",
             background: "black",
             color: "white",
@@ -169,7 +104,6 @@ const ChatWindow = ({ messageList, setMessageList }) => {
         />
 
         <button
-          // className="submit  "
           style={{
             float: "right",
             marginTop: "5px",
@@ -181,7 +115,6 @@ const ChatWindow = ({ messageList, setMessageList }) => {
             borderRadius: "50%",
 
             position: "relative",
-            // height: "1rem",
           }}
           onClick={sendMessage}
         >

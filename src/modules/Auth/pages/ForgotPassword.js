@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import OTPInput from "otp-input-react";
 import { useHistory } from "react-router-dom";
@@ -8,9 +8,10 @@ const ForgotPassword = (props) => {
   const [OTP, setOTP] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
   useEffect(() => {
-    setEmail(props.location.state);
-  }, []);
+    setEmail(props?.location?.state);
+  }, [props.location.state]);
   const url = "http://localhost:5000/api/code-verify";
   const options = {
     method: "POST",
@@ -93,7 +94,7 @@ const ForgotPassword = (props) => {
                         type="submit"
                         className="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn"
                         onClick={() => Handle()}
-                        disabled={loading ? "true" : null}
+                        disabled={loading ? true : null}
                       >
                         {loading ? (
                           <div

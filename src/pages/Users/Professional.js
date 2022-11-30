@@ -1,14 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PROFESSION_DETAIL_BY_ID } from "../../reducers/userReducer";
 import "react-toastify/dist/ReactToastify.css";
-const UserData = (props) => {
-  const { profession } = props;
-  useEffect(() => {
-    setQualification(profession?.qualification);
-  }, [props, profession]);
-  const { id } = useParams();
+import { Edit } from "@mui/icons-material";
+import SplashScreen from "../../modules/Partials/SplashScreen";
+const Professional = () => {
+  const { loading, profession_info } = useSelector((state) => state.userData);
+
   const dispatch = useDispatch();
   const [experienceNote, setExperienceNote] = useState("");
   const [experienceYear, setExperienceYear] = useState(0);
@@ -19,7 +17,23 @@ const UserData = (props) => {
       degree_note: "",
     },
   ]);
-
+  useEffect(() => {
+    if (profession_info?.user) {
+      setQualification(profession_info?.qualification);
+      setExperienceNote(profession_info?.experience_note);
+      setExperienceYear(profession_info?.experience_year);
+    } else {
+      setQualification([
+        {
+          id: 1,
+          degree: "",
+          degree_note: "",
+        },
+      ]);
+      setExperienceNote("");
+      setExperienceYear("");
+    }
+  }, [profession_info, dispatch]);
   //.......................... Update date...............................//
   const addQualification = (e) => {
     e.preventDefault();
@@ -34,14 +48,26 @@ const UserData = (props) => {
   };
 
   //...Update(degree)...
-  const upDegree = (index, value) => {
+  const upDegree = (index) => (e) => {
     let oldQualification = [...qualification];
-    oldQualification[index].degree = value;
+    let { degree_note, id } = oldQualification[index];
+
+    oldQualification[index] = {
+      degree_note: degree_note,
+      id: id,
+      degree: e.target.value,
+    };
     setQualification(oldQualification);
   }; //...Update(degree_note)...
-  const upDegreeNote = (index, value) => {
+  const upDegreeNote = (index) => (e) => {
     let oldQualification = [...qualification];
-    oldQualification[index].degree_note = value;
+
+    let { degree, id } = oldQualification[index];
+    oldQualification[index] = {
+      degree_note: e.target.value,
+      id: id,
+      degree: degree,
+    };
     setQualification(oldQualification);
   }; //...Delete Items...
 
@@ -54,7 +80,7 @@ const UserData = (props) => {
     setQualification(NewDataForQualification);
   };
   const ForUpdate = {
-    id,
+    id: profession_info?._id,
     experience_note: experienceNote,
     experience_year: experienceYear,
     qualification,
@@ -65,39 +91,37 @@ const UserData = (props) => {
   };
   return (
     <>
-      <form className="form form-label-right">
-        {/*  Form */}
-        <div className="form-group row">
-          <div className="col-lg-6">
-            <label htmlFor="ProductName">Experience(Year)</label>
-            <input
-              type="text"
-              className="form-control"
-              defaultValue={profession?.experience_year}
-              onChange={(e) => {
-                setExperienceYear(e.target.value);
-              }}
-              placeholder="Experience Year"
-            />
+      {!loading ? (
+        <form className="form form-label-right">
+          <div className="form-group row">
+            <div className="col-lg-6">
+              <label htmlFor="ProductName">Experience(Year)</label>
+              <input
+                type="text"
+                className="form-control"
+                value={experienceYear}
+                onChange={(e) => {
+                  setExperienceYear(e.target.value);
+                }}
+                placeholder="Experience Year"
+              />
+            </div>
+            <div className="col-lg-6">
+              <label htmlFor="ProductName">
+                Any description about experience
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={experienceNote}
+                onChange={(e) => {
+                  setExperienceNote(e.target.value);
+                }}
+                placeholder="Experience_note"
+              />
+            </div>
           </div>
-          <div className="col-lg-6">
-            <label htmlFor="ProductName">
-              Any description about experience
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              defaultValue={profession?.experience_note}
-              onChange={(e) => {
-                setExperienceNote(e.target.value);
-              }}
-              placeholder="Experience_note"
-            />
-          </div>
-        </div>
 
-        <>
-          {" "}
           {qualification?.map((data, index) => (
             <Fragment key={index}>
               <div className="form-group row">
@@ -108,7 +132,7 @@ const UserData = (props) => {
                     placeholder="Degree"
                     className="form-control"
                     value={data?.degree}
-                    onChange={(e) => upDegree(index, e.target.value)}
+                    onChange={upDegree(index)}
                   />
                 </div>{" "}
                 <div className="col-lg-6">
@@ -121,7 +145,7 @@ const UserData = (props) => {
                     placeholder="Degree Note"
                     className="form-control"
                     value={data?.degree_note}
-                    onChange={(e) => upDegreeNote(index, e.target.value)}
+                    onChange={upDegreeNote(index)}
                   />
                 </div>
               </div>
@@ -161,16 +185,19 @@ const UserData = (props) => {
               )}
             </Fragment>
           ))}
-        </>
-        <button
-          type="button"
-          class="btn btn-inverse-info btn-icon mr-2"
-          onClick={() => UpdateUserDetail()}
-        >
-          <i class="ti-pencil"></i>
-        </button>
-      </form>
+
+          <button
+            type="button"
+            className="btn btn-inverse-info btn-icon mr-2"
+            onClick={() => UpdateUserDetail()}
+          >
+            <Edit />
+          </button>
+        </form>
+      ) : (
+        <SplashScreen />
+      )}
     </>
   );
 };
-export default UserData;
+export default Professional;

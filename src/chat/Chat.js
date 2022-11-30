@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 
 import "./Chat.css";
@@ -18,8 +19,8 @@ const Chat = () => {
     },
   ]);
 
-  const getAllMessages = async () => {
-    await fetch(`${baseUrl}/api/message/all/${roomId}`, {
+  const getAllMessages = () => {
+    fetch(`${baseUrl}/api/message/all/${roomId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -51,9 +52,9 @@ const Chat = () => {
     <>
       <ul className="nav border-top" id="setting-panel">
         <li className="nav-item">
-          <a className="nav-link">
-            LIVE CHAT ({rname})<p style={{ fontSize: "10px" }}>{roomId}</p>
-          </a>
+          {/* <a className="nav-link" href="#"> */}
+          LIVE CHAT ({rname})<p style={{ fontSize: "10px" }}>{roomId}</p>
+          {/* </a> */}
         </li>
       </ul>
 

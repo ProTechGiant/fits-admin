@@ -1,9 +1,4 @@
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 export const fetch2 = async (api, body, type) => {
-  console.log("body", body);
-  console.log("PI", api);
-  console.log("method", type);
   const res = await fetch(api, {
     method: type,
     headers: {
@@ -11,8 +6,7 @@ export const fetch2 = async (api, body, type) => {
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     },
     body: JSON.stringify(body),
-  }).then((res) => console.log("sjadddddd", res));
-
+  });
   return await res.json();
 };
 

@@ -1,4 +1,6 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { Component } from "react";
+import NetworkErrorPage from "./NetworkErrorPage";
 
 export default function (ComposedComponent) {
   class NetworkDetector extends Component {
@@ -43,6 +45,7 @@ export default function (ComposedComponent) {
         <div>
           {isDisconnected && (
             <div className="internet-error">
+              <NetworkErrorPage />
               <p>{alert("Please check your internet connection... ")}</p>
             </div>
           )}

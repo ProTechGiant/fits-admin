@@ -1,7 +1,7 @@
 import { baseUrl } from "../config/baseUrl";
 
-export const getUser = async () => {
-  return await fetch(`${baseUrl}/api/users`, {
+export const getUser = () => {
+  return fetch(`${baseUrl}/api/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,6 @@ export const getUser = async () => {
     },
   })
     .then((response) => {
-      console.log("user helpers page", response);
       return response.json();
     })
     .catch((err) => {

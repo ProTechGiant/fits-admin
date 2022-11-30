@@ -1,7 +1,7 @@
 import { baseUrl } from "../config/baseUrl";
 
-export const getProfile = async () => {
-  return await fetch(`${baseUrl}/api/orders`, {
+export const getProfile = () => {
+  return fetch(`${baseUrl}/api/orders`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,6 @@ export const getProfile = async () => {
     },
   })
     .then((response) => {
-      console.log("sfafadfasdf", response);
       return response.json();
     })
     .catch((err) => {

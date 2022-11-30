@@ -6,7 +6,7 @@ const Logout = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(logoutMe());
-  }, []);
+  }, [dispatch]);
   return <div>Logout...</div>;
 };
 

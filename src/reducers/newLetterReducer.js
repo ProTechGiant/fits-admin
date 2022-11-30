@@ -14,7 +14,6 @@ export const ADD_NEWS_LETTER = createAsyncThunk(
     const result = await axios.post(`${baseUrl}/newsletter/create`, body, {
       // receive two    parameter endpoint url ,form data
     });
-    console.log("results", result.data);
     return result.data;
   }
 );

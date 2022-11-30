@@ -11,7 +11,7 @@ const StatusUpdate = ({ row, reload }) => {
   const StatusUpdateFunc = async (status, Id) => {
     try {
       await statusUpdate({ Id, status }).then((result) => {
-        if (result.data.statusCode === 200) {
+        if (result.data.accountVerified) {
           toast.success("status updated", {
             autoClose: 2000,
           });

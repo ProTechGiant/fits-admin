@@ -7,13 +7,13 @@ import SettingPanel from "./Partials/SettingPanel";
 const Layout = ({ children }) => {
   return (
     <>
-      <div class="container-scroller">
+      <div className="container-scroller">
         <Navbar />
-        <div class="container-fluid page-body-wrapper">
+        <div className="container-fluid page-body-wrapper">
           <SettingPanel />
           {/* Sidebar */}
           <SideBar />
-          <div class="main-panel">
+          <div className="main-panel">
             {/* Begin: Content Wrapper */}
             <main>{children}</main>
             {/* End: Content Wrapper */}

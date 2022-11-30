@@ -13,6 +13,7 @@ toast.configure();
 
 const Trainer = () => {
   const dispatch = useDispatch();
+
   const [totalUsers, setTotalUsers] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
   const [rowId, setRowId] = React.useState("");
@@ -39,7 +40,7 @@ const Trainer = () => {
       cell: (row, index) => (
         <img
           type="image"
-          class="rounded-circle"
+          className="rounded-circle"
           width="40px"
           alt="not-found"
           src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
@@ -108,7 +109,7 @@ const Trainer = () => {
             <Link to={`/admin/${row?.role}/${row?._id}`}>
               <button
                 type="button"
-                class="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
+                className="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
               ></button>
             </Link>
           </>
@@ -121,7 +122,7 @@ const Trainer = () => {
       <div className="card">
         <div className="card-body">
           <div
-            class="row "
+            className="row "
             style={{
               border: "2px solid #ffff",
               borderRadius: "10px",
@@ -144,8 +145,9 @@ const Trainer = () => {
                       onChange={(e) => onChange(e)}
                       value={seaching}
                     />
+
                     <span
-                      className="fas fa-times fa-1x field-icon  px-3 "
+                      className="fa fa-close fa-1x field-icon  px-3 "
                       onClick={() => handleRemoveFilter()}
                     ></span>
                   </div>

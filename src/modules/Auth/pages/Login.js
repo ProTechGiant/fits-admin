@@ -5,7 +5,6 @@ import {
   loginFail,
   loginSuccess,
 } from "../../../reducers/authReducer";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +13,6 @@ toast.configure();
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const [passwordShown, setPasswordShown] = useState(false);
   const [password, setPassword] = useState();
   const [email, setEmail] = useState("");
@@ -30,14 +28,12 @@ const Login = () => {
     setLoading(true);
     dispatch(loginPending());
 
-    console.log("email ", email, " password: ", password);
-
     try {
       login({ email, password }).then((data) => {
         if (data?.message === "success") {
           authenticate(data, () => {
             setTimeout(() => {
-              dispatch(loginSuccess({ data }));
+              dispatch(loginSuccess(data));
               setLoading(false);
               toast.success("Login Successfully!", {
                 autoClose: 1000,
@@ -117,7 +113,7 @@ const Login = () => {
                         type="submit"
                         className="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn"
                         onClick={(e) => handleSubmit(e)}
-                        disabled={loading ? "true" : null}
+                        disabled={loading ? true : null}
                       >
                         {loading ? (
                           <div

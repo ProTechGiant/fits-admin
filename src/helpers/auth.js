@@ -35,14 +35,15 @@ export const isAuthenticated = () => {
 
 export const me = async () => {
   try {
-    const response = await fetch(`${baseUrl}/api/me`, {
+    return fetch(`${baseUrl}/api/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
+    }).then((response) => {
+      return response.json();
     });
-    return await response.json();
   } catch (err) {
     console.log(err);
   }

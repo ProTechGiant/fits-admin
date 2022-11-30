@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { fetch3, fetch2 } from "./helper/fetch";
 
 const initialState = {
@@ -9,6 +10,10 @@ const initialState = {
   personal_info: {},
   profession_info: {},
   user_info: {},
+  services: [],
+  reviews: [],
+  session: [],
+  stripe: {},
 };
 
 export const GET_USER_DATA = createAsyncThunk("getUser", async () => {
@@ -38,9 +43,19 @@ export const UPDATE_PROFESSION_DETAIL_BY_ID = createAsyncThunk(
   }
 );
 export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
-  "updateProfessionDetail",
+  "updatePersonalDetail",
   async (id1) => {
-    const { id, name, city, state, country, date_of_birth, gender } = id1;
+    const {
+      id,
+      name,
+      city,
+      state,
+      country,
+      date_of_birth,
+      gender,
+      profileImage,
+    } = id1;
+
     const result = await fetch2(
       `/api/personal/${id}`,
       {
@@ -50,6 +65,24 @@ export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
         city,
         state,
         date_of_birth,
+        profileImage,
+      },
+      "put"
+    );
+    return result;
+  }
+);
+export const UPDATE_UserGoal_DETAIL_BY_ID = createAsyncThunk(
+  "updateUserGoalDetail",
+  async (id1) => {
+    const { id, fitness_goal, fitness_level, services_offered } = id1;
+
+    const result = await fetch2(
+      `/api/fitness/${id}`,
+      {
+        fitness_goal,
+        fitness_level,
+        services_offered,
       },
       "put"
     );
@@ -67,12 +100,12 @@ export const propertyReducer = createSlice({
     },
     [GET_USER_DATA.fulfilled]: (state, action) => {
       state.loading = false;
-      state.user = action.payload.data;
-      if (action.payload.data?.length > 0) {
-        const trainerArray = action.payload.data?.filter(
+      state.user = action.payload;
+      if (action.payload?.length > 0) {
+        const trainerArray = action.payload?.filter(
           (item) => item.role === "trainer"
         );
-        const traineeArray = action.payload.data?.filter(
+        const traineeArray = action.payload?.filter(
           (item) => item.role === "trainee"
         );
         if (trainerArray?.length > 0) {
@@ -92,31 +125,72 @@ export const propertyReducer = createSlice({
     },
     [GET_USER_DETAIL_BY_ID.fulfilled]: (state, action) => {
       state.loading = false;
-      if (action.payload.data) {
-        state.user_info = action.payload.data.user;
-        if (action.payload.data.personal_info.length > 0) {
-          state.personal_info = action.payload.data.personal_info?.[0];
+      if (action?.payload?.statusCode === 201 && action?.payload?.user) {
+        state.user_info = action?.payload?.user;
+        if (action?.payload?.personal_info) {
+          state.personal_info = action?.payload?.personal_info;
         } else {
           state.personal_info = {};
         }
-        if (action.payload.data.profession_info.length > 0) {
-          state.profession_info = action.payload.data.profession_info?.[0];
+        if (action?.payload?.profession_info) {
+          state.profession_info = action?.payload?.profession_info;
         } else {
           state.profession_info = {};
+        }
+        if (action?.payload?.services) {
+          state.services = action?.payload?.services;
+        } else {
+          state.services = [];
+        }
+        if (action?.payload?.reviews) {
+          state.reviews = action?.payload?.reviews;
+        } else {
+          state.reviews = [];
+        }
+        if (action?.payload?.session) {
+          state.session = action?.payload?.session;
+        } else {
+          state.session = [];
+        }
+        if (action?.payload?.stripe) {
+          state.stripe = action?.payload?.stripe;
+        } else {
+          state.stripe = [];
         }
       } else {
         state.personal_info = {};
         state.professional_info = {};
         state.user_info = {};
+        state.services = [];
+        state.reviews = [];
+        state.session = [];
+        state.stripe = [];
       }
+    },
+    [UPDATE_PROFESSION_DETAIL_BY_ID.pending]: (state, action) => {
+      state.loading = true;
     },
     [UPDATE_PROFESSION_DETAIL_BY_ID.fulfilled]: (state, action) => {
       state.loading = false;
-      state.profession_info = action.payload.data;
+      if (action.payload.statusCode === 200) {
+        state.profession_info = action.payload.profession;
+      }
+    },
+    [UPDATE_PERSONAL_DETAIL_BY_ID.pending]: (state, action) => {
+      state.loading = true;
     },
     [UPDATE_PERSONAL_DETAIL_BY_ID.fulfilled]: (state, action) => {
       state.loading = false;
-      state.personal_info = action.payload.data;
+      if (action.payload.statusCode === 200) {
+        state.personal_info = action.payload.data;
+      }
+    },
+    [UPDATE_UserGoal_DETAIL_BY_ID.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [UPDATE_UserGoal_DETAIL_BY_ID.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user_info = action.payload.data;
     },
   },
 });

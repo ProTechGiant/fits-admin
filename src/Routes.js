@@ -20,14 +20,15 @@ export function Routes() {
   const dispatch = useDispatch();
   useEffect(() => {
     handleMe();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const handleMe = () => {
     setLoading(true);
     try {
       me().then((data) => {
-        if (data?._id) {
-          dispatch(isMeAuth({ data }));
+        if (data?.statusCode === 200) {
+          dispatch(isMeAuth(data));
           setLoading(false);
         } else {
           setLoading(false);

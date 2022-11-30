@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetch2 } from "./helper/fetch";
 import axios from "axios";
 import { baseUrl } from "../config/baseUrl";
 
