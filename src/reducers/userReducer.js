@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { baseUrl } from "../config/baseUrl";
 
 import { fetch3, fetch2 } from "./helper/fetch";
 
