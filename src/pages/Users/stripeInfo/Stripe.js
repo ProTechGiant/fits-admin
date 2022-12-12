@@ -14,7 +14,7 @@ const Stripe = () => {
         <div className="col-4"></div>
         <div className="col-4 text-right">
           <label className="font-weight-bold text-success ">
-            {stripe?.customer?.balance}
+            $ {stripe?.customer?.balance ? stripe?.customer?.balance : 0}
           </label>
         </div>
       </div>
