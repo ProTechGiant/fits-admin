@@ -3,9 +3,23 @@ import { useSelector } from "react-redux";
 
 const Stripe = () => {
   const { loading, stripe } = useSelector((state) => state.userData);
-
+  console.log("stripe", stripe);
   useEffect(() => {}, [stripe]);
-  return <div>Stripe</div>;
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-4">
+          <label className="font-weight-bold">Closing balance</label>
+        </div>
+        <div className="col-4"></div>
+        <div className="col-4 text-right">
+          <label className="font-weight-bold text-success ">
+            {stripe?.customer?.balance}
+          </label>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Stripe;
