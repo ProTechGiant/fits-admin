@@ -17,14 +17,14 @@ const initialState = {
 };
 
 export const GET_USER_DATA = createAsyncThunk("getUser", async () => {
-  const result = await fetch3("/api/admin/users", "get");
+  const result = await fetch3(`${baseUrl}/api/admin/users`, "get");
 
   return result;
 });
 export const GET_USER_DETAIL_BY_ID = createAsyncThunk(
   "getUserDetails",
   async (id) => {
-    const result = await fetch3(`/api/user/${id}`, "get");
+    const result = await fetch3(`${baseUrl}/api/user/${id}`, "get");
 
     return result;
   }
@@ -35,7 +35,7 @@ export const UPDATE_PROFESSION_DETAIL_BY_ID = createAsyncThunk(
     const { id, experience_note, experience_year, qualification } = id1;
 
     const result = await fetch2(
-      `/api/profession/${id}`,
+      `${baseUrl}/api/profession/${id}`,
       { experience_note, experience_year, qualification },
       "put"
     );
@@ -58,7 +58,7 @@ export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
     } = id1;
 
     const result = await fetch2(
-      `/api/personal/${id}`,
+      `${baseUrl}/api/personal/${id}`,
       {
         gender,
         name,
@@ -80,7 +80,7 @@ export const UPDATE_UserGoal_DETAIL_BY_ID = createAsyncThunk(
     const { id, fitness_goal, fitness_level, services_offered } = id1;
 
     const result = await fetch2(
-      `/api/fitness/${id}`,
+      `${baseUrl}/api/fitness/${id}`,
       {
         fitness_goal,
         fitness_level,
