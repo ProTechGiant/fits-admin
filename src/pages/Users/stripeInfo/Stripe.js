@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Stripe = () => {
-  const { loading, stripe } = useSelector((state) => state.userData);
-  console.log("stripe", stripe);
+  const { stripe } = useSelector((state) => state.userData);
+
   useEffect(() => {}, [stripe]);
   return (
     <div className="container">

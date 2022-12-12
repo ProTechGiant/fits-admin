@@ -24,7 +24,6 @@ export const GET_USER_DATA = createAsyncThunk("getUser", async () => {
 export const GET_USER_DETAIL_BY_ID = createAsyncThunk(
   "getUserDetails",
   async (id) => {
-    console.log("id", id);
     const result = await fetch3(`/api/user/${id}`, "get");
 
     return result;
@@ -55,6 +54,7 @@ export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
       date_of_birth,
       gender,
       profileImage,
+      user,
     } = id1;
 
     const result = await fetch2(
@@ -67,6 +67,7 @@ export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
         state,
         date_of_birth,
         profileImage,
+        user,
       },
       "put"
     );

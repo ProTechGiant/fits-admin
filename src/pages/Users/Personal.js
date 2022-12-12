@@ -13,9 +13,10 @@ const Personal = () => {
   const [birthDate, setBirthDate] = useState("");
   const [state, setState] = useState("");
   const { loading, personal_info } = useSelector((state) => state.userData);
-  console.log("perios al", personal_info);
+
   const ForUpdate = {
     id: personal_info?._id,
+    user: personal_info?.user,
     name: name,
     city: city,
     country: country,
