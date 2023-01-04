@@ -27,6 +27,7 @@ export function Routes() {
     setLoading(true);
     try {
       me().then((data) => {
+        console.log("me>>>>>>>>>", data);
         if (data?.statusCode === 200) {
           dispatch(isMeAuth(data));
           setLoading(false);

@@ -44,7 +44,6 @@ export const forgotPasswordReducer = createSlice({
   reducers: {},
   extraReducers: {
     [FORGOT_PASSWORD.fulfilled]: (state, action) => {
-      console.log("Action", action);
       state.loading = false;
       if (action.payload.data.message) {
         // state.forgotPassword.push(action.payload.data);
@@ -56,8 +55,6 @@ export const forgotPasswordReducer = createSlice({
           state.message = action.payload.data.message;
         }
       }
-      console.log("Messages", state.message);
-      //   console.log("Forgot Password", state.forgotPassword);
     },
     [FORGOT_PASSWORD.pending]: (state, action) => {
       state.loading = true;

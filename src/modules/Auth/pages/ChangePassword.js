@@ -29,7 +29,6 @@ const ChangePassword = (props) => {
     }),
   };
   const handleSubmit = () => {
-    console.log("hellllll");
     if (password === "") {
       setTimeout(() => {
         toast.error("New Password is empty", {

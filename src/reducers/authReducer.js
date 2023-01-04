@@ -47,7 +47,6 @@ export const authReducer = createSlice({
       state.error = payload.error;
     },
     isMeAuth: (state, { payload }) => {
-      console.log("payload", payload);
       state.isAuth = true;
       state.token = localStorage.getItem("access_token");
       state.user = payload?.data;
