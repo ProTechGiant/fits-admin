@@ -3,18 +3,22 @@ import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CURRENCY_SYMBOLS } from "../../../countryList/countryList";
+import SplashScreen from "../../../modules/Partials/SplashScreen";
 import { customStyles } from "../../../modules/styles/customStyles";
 import "./TransactionHistory";
 const TransactionHistory = () => {
   const { transaction_history } = useSelector((state) => state.userData);
   const [rowId, setRowId] = React.useState("");
   const [offset, setOffset] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [totalTransactions, setTotalTransaction] = useState(0);
   useEffect(() => {
+    setIsLoading(true);
     if (transaction_history?.data) {
       const lengthData = transaction_history?.data.length;
       setTotalTransaction(lengthData);
     }
+    setIsLoading(false);
   }, [transaction_history]);
   const columns = [
     {
@@ -81,6 +85,7 @@ const TransactionHistory = () => {
   ];
   return (
     <>
+      {isLoading && <SplashScreen />}
       <DataTable
         paginationDefaultPage={offset === 0 ? 1 : offset}
         columns={columns}
