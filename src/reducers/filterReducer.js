@@ -13,7 +13,7 @@ export const initialState = {
 
 export const searchFilter = createAsyncThunk("searchfilter", async (body) => {
   const result = await axios.post(`${baseUrl}/property/search`, body);
-  console.log("redux result", result);
+
   return result;
 });
 
@@ -33,7 +33,6 @@ export const filterReducer = createSlice({
       state.error = "";
       state.token = payload.token;
       localStorage.setItem("token", payload.token);
-      console.log("reducer token", payload.token);
     },
     loginFail: (state, { payload }) => {
       state.loading = false;
@@ -41,7 +40,6 @@ export const filterReducer = createSlice({
       console.log("reducer error", payload.error);
     },
     storeToken: (state, { payload }) => {
-      console.log("actionnn", payload.token);
       localStorage.setItem("token", payload.token);
     },
     Logout: (state, action) => {

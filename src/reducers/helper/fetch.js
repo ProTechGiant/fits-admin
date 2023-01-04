@@ -1,4 +1,5 @@
 export const fetch2 = async (api, body, type) => {
+  console.log("api", api, "body", body, "type", type);
   const res = await fetch(api, {
     method: type,
     headers: {

@@ -2,8 +2,8 @@
   "name": "food",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://fits-admin.web-relieve.com",
-  "proxy": "https://fits-api-server.herokuapp.com",
+  "homepage": "https://mdwkhf9mqx.us-east-1.awsapprunner.com/",
+  "proxy": "https://mdwkhf9mqx.us-east-1.awsapprunner.com",
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.10.5",

@@ -5,11 +5,9 @@ import { Link } from "react-router-dom";
 
 const NetworkErrorPage = () => {
   return (
-    <>
+    <div className="bg bg-danger text-light">
       <Stack spacing={3}>
         <Alert status="error">
-          <AlertIcon />
-          <SignalWifiBad />
           <h6>Please check your network connection</h6>
           <p> Your Network have disconnected.</p>
         </Alert>
@@ -52,7 +50,7 @@ const NetworkErrorPage = () => {
         </div>
         {/* <!-- page-body-wrapper ends --> */}
       </div>
-    </>
+    </div>
   );
 };
 
