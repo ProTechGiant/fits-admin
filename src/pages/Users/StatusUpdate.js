@@ -37,8 +37,7 @@ const StatusUpdate = ({ row, reload }) => {
             id="orders"
             className="form-control"
             onChange={(e) => ChangeState(e, row?._id)}
-            // value={row?.accountVerified}
-            defaultValue={row?.accountVerified}
+            value={row?.accountVerified}
           >
             <option
               value="disapproved"

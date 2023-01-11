@@ -9,20 +9,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_USER_DATA } from "../../reducers/userReducer";
 import StatusUpdate from "./StatusUpdate";
 import { Link } from "react-router-dom";
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import EmailVerification from "./EmailVerification";
+import SearchActiveUser from "./SearchActiveUser";
 toast.configure();
 
 const Trainer = () => {
   const dispatch = useDispatch();
-
+  const [traineeData, setTraineeData] = React.useState([]);
   const [totalUsers, setTotalUsers] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
   const [rowId, setRowId] = React.useState("");
-  const [seaching, setSearching] = useState("");
+  const [searching, setSearching] = useState("");
   const { loading, trainee } = useSelector((state) => state.userData);
-
-  useEffect(() => {}, [trainee]);
+  useEffect(() => {
+    if(!searching){
+    setTraineeData(trainee)
+   } 
+  }, [trainee]);
+  const handleAccountStatus = (value) => {
+    console.log("check",value)
+    setTraineeData(value)
+  };
   const onChange = async (e) => {
-    setSearching(e.target.value);
+    setSearching(e.target.value)
+    const query = e.target.value;
+    const serachingRes= trainee.filter((item) => {
+    return item.email.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+   setTraineeData(serachingRes)
+    
   };
   const handleRemoveFilter = () => {
     setSearching("");
@@ -91,14 +107,8 @@ const Trainer = () => {
       sortable: true,
       width: "120px",
       cell: (row) => (
-        <span
-          className={`badge  ${
-            row?.emailVerified === false ? "badge-danger" : "badge-success"
-          }`}
-          style={{ width: "100px" }}
-        >
-          {row?.emailVerified === true ? "Verified" : "NotVerified"}
-        </span>
+        <EmailVerification reload={reload} row={row} />
+       
       ),
     },
     {
@@ -134,16 +144,19 @@ const Trainer = () => {
                 All registered users listed here
               </h6>
             </div>
-            <div className="col-12 col-xl-8 col-md-8 mb-4 mb-xl-0"></div>
+            <div className="col-12 col-xl-8 col-md-8 mb-4 mb-xl-0">
+          <b className="h3"> <FiberManualRecordIcon className={`h5 ${traineeData[0]?.accountVerified==="approved"?"text-success":traineeData[0]?.accountVerified==="pending"?"text-warning":traineeData[0]?.accountVerified&&"text-danger"}`} />CheckUserStatus</b>
+          <SearchActiveUser accountCheck={trainee} handleAccountStatus={handleAccountStatus} />
+            </div>
             <div className="col-12 col-xl-4 col-md-4 mb-4 mb-xl-0">
               <div className="row">
                 <div className="col-12 input-container">
                   <div className="form-group">
                     <input
                       className="form-control form-control-sm"
-                      placeholder="Search product by name "
+                      placeholder="Search trainer by email "
                       onChange={(e) => onChange(e)}
-                      value={seaching}
+                      value={searching}
                     />
 
                     <span
@@ -164,7 +177,7 @@ const Trainer = () => {
               <DataTable
                 paginationDefaultPage={offset === 0 ? 1 : offset}
                 columns={columns}
-                data={trainee}
+                data={traineeData}
                 customStyles={customStyles}
                 pagination
                 fixedHeader

@@ -1,4 +1,5 @@
-node_modules/
-package-lock.json
-yarn.lock
-*.zip
+node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod

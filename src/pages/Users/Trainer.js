@@ -16,36 +16,32 @@ toast.configure();
 
 const Trainer = () => {
   const dispatch = useDispatch();
-  const [users, setUsers] = React.useState([]);
+  const [tarinerFilter, setTrainerFilter] = React.useState([]);
   const [totalUsers, setTotalUsers] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
   const [rowId, setRowId] = React.useState("");
-  const [seaching, setSearching] = useState("");
-  const [search, setSearch] = useState([]);
+  const [searching, setSearching] = useState("");
+ 
   const { loading, trainer } = useSelector((state) => state.userData);
 
   // edit or delete
   const [editShow, setEditShow] = React.useState(false);
 
-  useEffect(() => {}, [trainer]);
+  useEffect(() => {
+    if(!searching){
+      setTrainerFilter(trainer)
+   } 
+  }, [trainer]);
 
   const onChange = async (e) => {
     setSearching(e.target.value);
-    if (e.target.value === "") {
-      setUsers(search);
-    }
-
-    let searchData = search.filter((item) => {
-      if (
-        item.name
-          .toString()
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase())
-      ) {
-        return item;
-      }
-    });
-    setUsers(searchData);
+   
+    const query = e.target.value;
+    const serachingRes= trainer.filter((item) => {
+    return item.email.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+   setTrainerFilter(serachingRes)
+    
   };
   const handleRemoveFilter = () => {
     setSearching("");
@@ -179,9 +175,9 @@ const Trainer = () => {
                   <div className="form-group text-center">
                     <input
                       className="form-control form-control-sm "
-                      placeholder="Search product by name "
+                      placeholder="Search trainee by email "
                       onChange={(e) => onChange(e)}
-                      value={seaching}
+                      value={searching}
                     />
 
                     <span
@@ -202,7 +198,7 @@ const Trainer = () => {
               <DataTable
                 paginationDefaultPage={offset === 0 ? 1 : offset}
                 columns={columns}
-                data={trainer}
+                data={tarinerFilter}
                 customStyles={customStyles}
                 pagination
                 fixedHeader
