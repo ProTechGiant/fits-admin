@@ -1,15 +1,15 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: App Runner Template for FitsAdmin
+Description: App Runner Template for FitsAdminStack
 
 Parameters:
-  FitsAdminPort:
+  FitsAdminStackPort:
     Type: Number
     Description: The Port that NodeJS API listening on
-    Default: 80
+    Default: 81
     AllowedValues:
-      - 80
       - 81
       - 82
+      - 83
   ContainerImage:
     Type: String
     Description: container image
@@ -26,8 +26,7 @@ Parameters:
     Default: ECR
 
 Conditions:
-  NeedsAccessRole:
-    !Equals [!Ref ImageRepositoryType, 'ECR']
+  NeedsAccessRole: !Equals [!Ref ImageRepositoryType, "ECR"]
 
 Resources:
   AccessRole:
@@ -35,14 +34,14 @@ Resources:
     Condition: NeedsAccessRole
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2008-10-17'
+        Version: "2008-10-17"
         Statement:
           - Effect: Allow
             Principal:
               Service:
                 - build.apprunner.amazonaws.com
             Action: sts:AssumeRole
-  
+
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
 
@@ -54,12 +53,12 @@ Resources:
           - Effect: Allow
             Principal:
               Service: tasks.apprunner.amazonaws.com
-            Action: 'sts:AssumeRole'
+            Action: "sts:AssumeRole"
 
-  FitsAdmin:
+  FitsAdminStack:
     Type: AWS::AppRunner::Service
     Properties:
-      ServiceName: !Sub FitsAdmin-${Environment}
+      ServiceName: !Sub FitsAdminStack-${Environment}
       SourceConfiguration:
         AuthenticationConfiguration: !If
           - NeedsAccessRole
@@ -70,7 +69,7 @@ Resources:
           ImageIdentifier: !Ref ContainerImage
           ImageRepositoryType: !Ref ImageRepositoryType
           ImageConfiguration:
-            Port: !Ref FitsAdminPort
+            Port: !Ref FitsAdminStackPort
             RuntimeEnvironmentVariables:
               - Name: API_WORKS_MESSAGE
                 Value: !Ref WelcomeMessage
@@ -80,14 +79,14 @@ Resources:
       Tags:
         - Key: environment
           Value: !Ref Environment
-        
+
 Outputs:
   AppRunnerServiceArn:
     Description: ServiceArn of GitHub
-    Value: !GetAtt FitsAdmin.ServiceArn
+    Value: !GetAtt FitsAdminStack.ServiceArn
   AppRunnerServiceId:
     Description: AppRunnerServiceId
-    Value: !GetAtt FitsAdmin.ServiceId
+    Value: !GetAtt FitsAdminStack.ServiceId
   AppRunnerServiceUrl:
     Description: AppRunnerServiceUrl
-    Value: !GetAtt FitsAdmin.ServiceUrl
+    Value: !GetAtt FitsAdminStack.ServiceUrl

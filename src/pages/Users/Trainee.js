@@ -6,39 +6,46 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_USER_DATA } from "../../reducers/userReducer";
+import { GET_USER_DATA, SUSPEND_ACCOUNT } from "../../reducers/userReducer";
 import StatusUpdate from "./StatusUpdate";
 import { Link } from "react-router-dom";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import EmailVerification from "./EmailVerification";
 import SearchActiveUser from "./SearchActiveUser";
+import { Delete, Launch } from "@mui/icons-material";
+import { baseUrl } from "../../config/baseUrl";
+import Modal from "./modal";
+import ExpandableCompnent from "./expandableCompnent";
 toast.configure();
 
 const Trainer = () => {
   const dispatch = useDispatch();
   const [traineeData, setTraineeData] = React.useState([]);
-  const [totalUsers, setTotalUsers] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
-  const [rowId, setRowId] = React.useState("");
   const [searching, setSearching] = useState("");
+  const [model, setModel] = React.useState(false);
+  const [data, setData] = React.useState({});
+  const [suspended, setSuspended] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [modalText, setModalText] = React.useState("");
+
   const { loading, trainee } = useSelector((state) => state.userData);
   useEffect(() => {
-    if(!searching){
-    setTraineeData(trainee)
-   } 
+    if (!searching) {
+      setTraineeData(trainee);
+    }
   }, [trainee]);
   const handleAccountStatus = (value) => {
-    console.log("check",value)
-    setTraineeData(value)
+    console.log("check", value);
+    setTraineeData(value);
   };
   const onChange = async (e) => {
-    setSearching(e.target.value)
+    setSearching(e.target.value);
     const query = e.target.value;
-    const serachingRes= trainee.filter((item) => {
-    return item.email.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  });
-   setTraineeData(serachingRes)
-    
+    const serachingRes = trainee.filter((item) => {
+      return item.email.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    });
+    setTraineeData(serachingRes);
   };
   const handleRemoveFilter = () => {
     setSearching("");
@@ -48,6 +55,13 @@ const Trainer = () => {
     dispatch(GET_USER_DATA());
   };
 
+  const handleClose = () => {
+    setModel(false);
+  };
+
+  const suspendAccount = () => {
+    dispatch(SUSPEND_ACCOUNT(data));
+  };
   const columns = [
     {
       name: "Image",
@@ -106,9 +120,42 @@ const Trainer = () => {
       name: "Email Verified",
       sortable: true,
       width: "120px",
+      cell: (row) => <EmailVerification reload={reload} row={row} />,
+    },
+    {
+      name: "Actions",
       cell: (row) => (
-        <EmailVerification reload={reload} row={row} />
-       
+        <Link
+          to={`/admin/${row?.role}/${row?._id}`}
+          className="btn btn-icon mt-3 ml-2"
+          style={{ color: "#248afd" }}
+        >
+          <Launch />
+        </Link>
+      ),
+    },
+    {
+      name: "Suspend",
+      sortable: true,
+      width: "100px",
+      cell: (row) => (
+        <div
+          className={`fw ${
+            row.suspended
+              ? "badge text-center badge-text-black"
+              : "badge badge-text-red hover-red"
+          }`}
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            setModel(!model);
+            setData(row);
+            setDeleted(false);
+            setSuspended(true);
+            setModalText(!row.suspended ? "Suspend" : "Resume");
+          }}
+        >
+          {row.suspended ? "paused" : "suspended"}
+        </div>
       ),
     },
     {
@@ -116,12 +163,18 @@ const Trainer = () => {
       cell: (row) => {
         return (
           <>
-            <Link to={`/admin/${row?.role}/${row?._id}`}>
-              <button
-                type="button"
-                className="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
-              ></button>
-            </Link>
+            <button
+              type="button"
+              className="btn btn-icon mr-2 hover-red"
+              onClick={() => {
+                setModel(!model);
+                setData(row);
+                setSuspended(false);
+                setDeleted(true);
+              }}
+            >
+              <Delete />
+            </button>
           </>
         );
       },
@@ -139,14 +192,29 @@ const Trainer = () => {
             }}
           >
             <div className="col-12 col-xl-8 col-md-8 mb-4 mb-xl-0">
-              <h3 className="font-weight-bold">Users</h3>
+              <h3 className="font-weight-bold">Trainee</h3>
               <h6 className="font-weight-normal mb-3">
-                All registered users listed here
+                All registered trainee listed here
               </h6>
             </div>
             <div className="col-12 col-xl-8 col-md-8 mb-4 mb-xl-0">
-          <b className="h3"> <FiberManualRecordIcon className={`h5 ${traineeData[0]?.accountVerified==="approved"?"text-success":traineeData[0]?.accountVerified==="pending"?"text-warning":traineeData[0]?.accountVerified&&"text-danger"}`} />CheckUserStatus</b>
-          <SearchActiveUser accountCheck={trainee} handleAccountStatus={handleAccountStatus} />
+              <b className="h3">
+                {" "}
+                <FiberManualRecordIcon
+                  className={`h5 ${
+                    traineeData[0]?.accountVerified === "approved"
+                      ? "text-success"
+                      : traineeData[0]?.accountVerified === "pending"
+                      ? "text-warning"
+                      : traineeData[0]?.accountVerified && "text-danger"
+                  }`}
+                />
+                CheckUserStatus
+              </b>
+              <SearchActiveUser
+                accountCheck={trainee}
+                handleAccountStatus={handleAccountStatus}
+              />
             </div>
             <div className="col-12 col-xl-4 col-md-4 mb-4 mb-xl-0">
               <div className="row">
@@ -175,22 +243,30 @@ const Trainer = () => {
           ) : (
             <div>
               <DataTable
-                paginationDefaultPage={offset === 0 ? 1 : offset}
                 columns={columns}
                 data={traineeData}
                 customStyles={customStyles}
                 pagination
                 fixedHeader
-                paginationServer
-                paginationComponentOptions={{
-                  noRowsPerPage: 10,
-                }}
-                onChangePage={(page) => setOffset(page)}
-                paginationTotalRows={totalUsers}
-                expandableRowExpanded={(row) => row._id === rowId}
+                expandableRows
+                highlightOnHover
+                expandableRowsComponent={ExpandableCompnent}
               />
             </div>
           )}
+          <Modal
+            edit={model}
+            handleClose={handleClose}
+            data={data}
+            suspended={suspended}
+            deleted={deleted}
+            deleteClasses={false}
+            url={`${baseUrl}/api/user/${data._id}`}
+            reload={reload}
+            operationsText={deleted ? "Delete" : modalText}
+            relatedText={"trainee"}
+            operationFunctions={suspendAccount}
+          />
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import ErrorPage from "./modules/Errors/ErrorPage";
 import SplashScreen from "./modules/Partials/SplashScreen";
+import Bookings from "./pages/bookings/Bookings";
+import TransactionTabs from "./pages/Users/stripeInfo/Tabs";
 import TransactionDetails from "./pages/Users/stripeInfo/TransactionDetails";
 
 const DashboardPage = lazy(() => import("./pages/dashboard/"));
@@ -26,9 +28,10 @@ export default function BasePage() {
         <Route
           exact
           path="/transaction_history/:type/:create/:cus_id"
-          component={TransactionDetails}
+          component={TransactionTabs}
         />
         <Route exact path="/admin/profile" component={ProfilePage} />
+        <Route exact path="/admin/bookings" component={Bookings} />
         <Route exact path="/admin/dashboard" component={DashboardPage} />
         <Route exact path="/admin/Upprofile" component={ProfileUpdatePage} />
         <Route exact path="/error" component={ErrorPage} />

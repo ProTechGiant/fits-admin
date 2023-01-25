@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTransactionsCustomer } from "../../../reducers/userReducer";
 import TransactionHistory from "./TransactionHistory";
@@ -6,13 +6,10 @@ import TransactionHistory from "./TransactionHistory";
 const Stripe = () => {
   const { stripe } = useSelector((state) => state.userData);
 
-  const [limit, setLimit] = useState(1000);
   const dispatch = useDispatch();
   useEffect(() => {
     if (stripe?.customer?.id) {
-      dispatch(
-        handleTransactionsCustomer({ id: stripe?.customer?.id, limit: limit })
-      );
+      dispatch(handleTransactionsCustomer(stripe?.customer?.id));
     }
   }, [stripe]);
 

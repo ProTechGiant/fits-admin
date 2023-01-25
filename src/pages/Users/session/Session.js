@@ -1,33 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Card from "react-bootstrap/Card";
 import { ListGroup } from "react-bootstrap";
 import SplashScreen from "../../../modules/Partials/SplashScreen";
+import { Delete } from "@mui/icons-material";
+import { fetch3 } from "../../../reducers/helper/fetch";
+import { baseUrl } from "../../../config/baseUrl";
+import { GET_USER_DETAIL_BY_ID } from "../../../reducers/userReducer";
 
-const Session = () => {
+const Session = (props) => {
+  const { id } = props;
+  const dispatch = useDispatch();
   const { loading, session } = useSelector((state) => state.userData);
   const [userSession, setUserSession] = useState([]);
 
   useEffect(() => {
     setUserSession(session);
   }, [session]);
+
+  const deleteSession = (sessionId) => {
+    fetch3(`${baseUrl}/api/session/${sessionId}`, "delete").then((data) => {
+      if (data.deleted) {
+        dispatch(GET_USER_DETAIL_BY_ID(id));
+      }
+    });
+  };
   return (
     <>
       {!loading ? (
-        <div className="row">
+        <div
+          className="row"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {userSession?.length > 0
             ? userSession?.map((value, index) => {
                 return (
-                  <div className="col-12 col-md-4 mx-3" key={index}>
+                  <div className="col-12 col-md-5 mx-3 my-2" key={index}>
                     <Card
                       style={{
                         background: "#2332",
                       }}
                     >
                       <Card.Body>
-                        <Card.Title>Session {index + 1}</Card.Title>
+                        <Card.Title>
+                          Session {index + 1}
+                          <span className="float-right">
+                            <Delete
+                              style={{ color: "#4b49ac", cursor: "pointer" }}
+                              onClick={() => {
+                                deleteSession(value._id);
+                              }}
+                            />
+                          </span>
+                        </Card.Title>
                         <Card.Img
                           style={{ height: "50vh" }}
                           variant="top"
@@ -43,7 +73,6 @@ const Session = () => {
                             <small>
                               Session
                               <span className="float-right">
-                                {" "}
                                 {value?.session_title}
                               </span>
                             </small>
@@ -112,7 +141,7 @@ const Session = () => {
                               </span>{" "}
                             </small>
                           </ListGroup.Item>
-                          <ListGroup.Item className="bg bg-danger text-white text-center">
+                          <ListGroup.Item className="text-black fw">
                             Equipments{" "}
                             {/* <span className="float-right"> {value?.no_of_slots}</span>{" "} */}
                           </ListGroup.Item>

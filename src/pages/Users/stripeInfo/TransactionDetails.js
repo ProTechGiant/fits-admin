@@ -2,44 +2,52 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { CURRENCY_SYMBOLS } from "../../../countryList/countryList";
 import { transactionHistory } from "../../../reducers/userReducer";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Lists from "./DetailList";
+const TransactionDetails = (props) => {
+  const { cus_id, create, type } = props;
 
-const TransactionDetails = () => {
-  const { stripe, user_transaction_history, transaction_history } = useSelector(
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { stripe, user_transaction_history } = useSelector(
     (state) => state.userData
   );
 
-  const [limit, setLimit] = useState(3);
-  const { cus_id, create, type } = useParams();
-
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(transactionHistory({ type: type, create: create, id: cus_id }));
   }, []);
-
+  const rechargeAccountData =
+    user_transaction_history?.infoTransferUser?.recharge;
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-md-6 mt-4 ">
+      <div className="container-fluid mt-2">
+        <div style={{ cursor: "pointer" }} onClick={() => history.goBack()}>
+          <ArrowBack />
+        </div>
+        <div
+          className="row"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <div className="col-12 col-md-10 mt-4 ">
             <Card
               style={{
                 background: "#2332",
               }}
             >
               <Card.Body>
-                <Card.Title>{type}</Card.Title>
-                <Card.Img
-                  style={{ height: "50vh" }}
+                <Card.Title>{type} Detail</Card.Title>
+                {/* <Card.Img
+                  style={{ height: "10%" }}
                   variant="top"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuHNrp8-1tdA_CI1W2B0yrgjuWY8zR5782dQ&usqp=CAU"
-                />
+                  src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YWNjb3VudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                /> */}
 
-                <Card.Text className="mt-3 text-success text-center font-weight-bolder ">
+                {/* <Card.Text className="mt-3 text-center font-weight-bolder">
                   {[type.toUpperCase()]} DETAIL
-                </Card.Text>
+                </Card.Text> */}
 
                 <ListGroup className="list-group-flush">
                   <ListGroup.Item className="bg bg-dark text-white">
@@ -50,121 +58,60 @@ const TransactionDetails = () => {
                       </span>
                     </small>
                   </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      currency
-                      <span className="float-right">
-                        {`${
-                          type == "reciver"
-                            ? user_transaction_history?.infoTransferUser
-                                ?.reciver?.amount
-                            : user_transaction_history?.infoTransferUser?.sender
-                                ?.amount
-                        }
+                  <Lists
+                    keyData={"Currency"}
+                    value={`${rechargeAccountData?.amount}
                         ${
                           CURRENCY_SYMBOLS[
-                            stripe?.customer?.currency.toUpperCase()
+                            rechargeAccountData?.currency.toUpperCase()
                           ]
                         }`}
-                      </span>
-                    </small>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      email{" "}
-                      <span className="float-right">
-                        {" "}
-                        {stripe?.customer?.email}
-                      </span>
-                    </small>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      {" "}
-                      transaction
-                      <span className="float-right">
-                        {" "}
-                        {new Date(
-                          stripe?.customer?.created * 1000
-                        ).toLocaleString()}
-                      </span>
-                    </small>{" "}
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card.Body>
-            </Card>
-          </div>
-          <div className="col-12 col-md-6 mt-4 ">
-            <Card
-              style={{
-                background: "#2332",
-              }}
-            >
-              <Card.Body>
-                <Card.Title>
-                  {" "}
-                  {type === "sender" ? "Reciver" : "Sender"}
-                </Card.Title>
-                <Card.Img
-                  style={{ height: "50vh" }}
-                  variant="top"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuHNrp8-1tdA_CI1W2B0yrgjuWY8zR5782dQ&usqp=CAU"
-                />
-
-                <Card.Text className="mt-3 text-success text-center font-weight-bolder ">
-                  {type === "sender" ? "RECIVER" : "SENDER"} DETAIL
-                </Card.Text>
-
-                <ListGroup className="list-group-flush">
-                  <ListGroup.Item className="bg bg-dark text-white">
-                    <small>
-                      {type === "sender" ? "reciver" : "sender"} name
-                      <span className="float-right">
-                        {" "}
-                        {user_transaction_history?.infoStripeUser?.name}
-                      </span>
-                    </small>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      currency
-                      <span className="float-right">
-                        {`${
-                          type === "sender"
-                            ? user_transaction_history?.infoTransferUser
-                                ?.reciver?.amount
-                            : user_transaction_history?.infoTransferUser?.sender
-                                ?.amount
-                        }
-                        ${
-                          CURRENCY_SYMBOLS[
-                            user_transaction_history?.infoStripeUser?.currency.toUpperCase()
-                          ]
-                        }`}
-                      </span>
-                    </small>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      email{" "}
-                      <span className="float-right">
-                        {" "}
-                        {user_transaction_history?.infoStripeUser?.email}
-                      </span>
-                    </small>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <small>
-                      {" "}
-                      transaction
-                      <span className="float-right">
-                        {new Date(
-                          user_transaction_history?.infoStripeUser?.created *
-                            1000
-                        ).toLocaleString()}{" "}
-                      </span>
-                    </small>{" "}
-                  </ListGroup.Item>
+                    bgcolor={"gray"}
+                  />
+                  <Lists keyData={"Email"} value={stripe?.customer?.email} />
+                  <Lists
+                    keyData={"Transaction"}
+                    value={new Date(
+                      stripe?.customer?.created * 1000
+                    ).toLocaleString()}
+                    bgcolor={"gray"}
+                  />
+                  <Lists
+                    keyData={"Balance"}
+                    value={stripe?.customer?.balance}
+                  />
+                  <Lists
+                    keyData={"Card"}
+                    value={`***************${stripe?.card?.last4}`}
+                    bgcolor={"gray"}
+                  />
+                  <Lists
+                    keyData={"Description"}
+                    value={rechargeAccountData?.description}
+                  />
+                  <Lists
+                    keyData={"Payment Type"}
+                    value={rechargeAccountData?.payment_method_details?.type}
+                    bgcolor={"gray"}
+                  />
+                  <Lists
+                    keyData={"Funding Type"}
+                    value={rechargeAccountData?.source?.funding}
+                  />
+                  <Lists
+                    keyData={"Invoice Prefixes"}
+                    value={stripe?.customer?.invoice_prefix}
+                    bgcolor={"gray"}
+                  />
+                  <Lists
+                    keyData={"Seller message"}
+                    value={rechargeAccountData?.outcome?.seller_message}
+                  />
+                  <Lists
+                    keyData={"Status"}
+                    value={rechargeAccountData?.status}
+                    bgcolor={"gray"}
+                  />
                 </ListGroup>
               </Card.Body>
             </Card>

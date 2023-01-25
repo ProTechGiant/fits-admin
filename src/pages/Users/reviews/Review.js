@@ -73,7 +73,7 @@ const Review = () => {
             <div className="col-md-6">
               <div className="row">
                 <div className="col-md-4 col-4">
-                  <h2>Reviews</h2>
+                  <h3>Reviews</h3>
                   <button className="rating_circle">
                     {usersReviews?.toFixed(1)}
                   </button>

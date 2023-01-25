@@ -24,7 +24,7 @@ const Navbar = () => {
       <NetworkError />
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center ">
         <Link className="navbar-brand brand-logo mr-5" to="/">
-          <h2>Fits Admin</h2>
+          <h3>Fits Admin</h3>
         </Link>
         <Link className="navbar-brand brand-logo-mini" to="/">
           <img src="/assets/images/logo-mini.svg" alt="logo" />

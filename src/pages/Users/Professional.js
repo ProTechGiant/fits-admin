@@ -188,7 +188,7 @@ const Professional = () => {
 
           <button
             type="button"
-            className="btn btn-inverse-info btn-icon mr-2"
+            className="btn btn-inverse-info btn-icon ml-2"
             onClick={() => UpdateUserDetail()}
           >
             <Edit />

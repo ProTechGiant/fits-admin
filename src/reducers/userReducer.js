@@ -6,24 +6,33 @@ import { fetch3, fetch2 } from "./helper/fetch";
 const initialState = {
   user: [],
   loading: false,
+  isLoading: false,
+  success: false,
   trainer: [],
   trainee: [],
   personal_info: {},
   profession_info: {},
+  single_class: {},
   user_info: {},
   services: [],
+  user_classes: [],
   reviews: [],
   session: [],
   stripe: {},
-  transaction_history: [],
+  customer: {},
+  transaction_history_users: [],
   user_transaction_history: [],
+  suspended_account_data: [],
+  transaction_history_recharge: [],
+  transaction_history_refund: [],
+  transaction_history_booking: [],
 };
 
 export const GET_USER_DATA = createAsyncThunk("getUser", async () => {
   const result = await fetch3(`${baseUrl}/api/admin/users`, "get");
-
   return result;
 });
+
 export const GET_USER_DETAIL_BY_ID = createAsyncThunk(
   "getUserDetails",
   async (id) => {
@@ -32,6 +41,25 @@ export const GET_USER_DETAIL_BY_ID = createAsyncThunk(
     return result;
   }
 );
+
+export const GET_CLASS_BY_ID = createAsyncThunk("getClassById", async (id) => {
+  const result = await fetch3(`${baseUrl}/api/admin/classes/${id}`, "get");
+
+  return result;
+});
+
+export const UPDATE_CLASS_BY_ID = createAsyncThunk(
+  "updateClassById",
+  async ({ id, body }) => {
+    const result = await fetch2(
+      `${baseUrl}/api/admin/classes/${id}`,
+      body,
+      "put"
+    );
+    return result;
+  }
+);
+
 export const UPDATE_PROFESSION_DETAIL_BY_ID = createAsyncThunk(
   "updateProfessionDetail",
   async (id1) => {
@@ -45,18 +73,18 @@ export const UPDATE_PROFESSION_DETAIL_BY_ID = createAsyncThunk(
     return result;
   }
 );
+
 export const handleTransactionsCustomer = createAsyncThunk(
   "handleTransactionsCustomer",
-  async (id1) => {
-    const { limit, id } = id1;
-    const result = await fetch2(
+  async (id) => {
+    const result = await fetch3(
       `${baseUrl}/api/stripe/customer/checkBalanceTransactions/${id}`,
-      { limit },
       "post"
     );
     return result;
   }
 );
+
 export const transactionHistory = createAsyncThunk(
   "transactionHistory",
   async (id1) => {
@@ -71,6 +99,7 @@ export const transactionHistory = createAsyncThunk(
     return result;
   }
 );
+
 export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
   "updatePersonalDetail",
   async (id1) => {
@@ -103,6 +132,7 @@ export const UPDATE_PERSONAL_DETAIL_BY_ID = createAsyncThunk(
     return result;
   }
 );
+
 export const UPDATE_UserGoal_DETAIL_BY_ID = createAsyncThunk(
   "updateUserGoalDetail",
   async (id1) => {
@@ -115,6 +145,29 @@ export const UPDATE_UserGoal_DETAIL_BY_ID = createAsyncThunk(
         fitness_level,
         services_offered,
       },
+      "put"
+    );
+    return result;
+  }
+);
+
+export const SUSPEND_ACCOUNT = createAsyncThunk(
+  "suspendAccount",
+  async (data) => {
+    const result = await fetch2(
+      `${baseUrl}/api/user/suspended/${data._id}`,
+      { suspended: !data.suspended },
+      "put"
+    );
+    return result;
+  }
+);
+export const UPDATE_USER_PASSWORD = createAsyncThunk(
+  "updateUserPassword",
+  async (data) => {
+    const result = await fetch2(
+      `${baseUrl}/api/admin/update/user/password/${data.data._id}`,
+      { password: data.password },
       "put"
     );
     return result;
@@ -168,6 +221,11 @@ export const propertyReducer = createSlice({
         } else {
           state.profession_info = {};
         }
+        if (action?.payload?.user_classes) {
+          state.user_classes = action?.payload?.user_classes;
+        } else {
+          state.user_classes = [];
+        }
         if (action?.payload?.services) {
           state.services = action?.payload?.services;
         } else {
@@ -207,7 +265,27 @@ export const propertyReducer = createSlice({
         state.profession_info = action.payload.profession;
       }
     },
-    [UPDATE_PERSONAL_DETAIL_BY_ID.pending]: (state, action) => {
+    [UPDATE_CLASS_BY_ID.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [UPDATE_CLASS_BY_ID.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      if (action.payload.statusCode === 200) {
+        state.updated_class = action.payload;
+        state.success = true;
+      }
+    },
+    [UPDATE_CLASS_BY_ID.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+    },
+
+    [GET_CLASS_BY_ID.fulfilled]: (state, action) => {
+      if (action.payload.statusCode === 200) {
+        state.single_class = action.payload;
+      }
+    },
+    [UPDATE_PERSONAL_DETAIL_BY_ID.pending]: (state) => {
       state.loading = true;
     },
     [UPDATE_PERSONAL_DETAIL_BY_ID.fulfilled]: (state, action) => {
@@ -216,22 +294,37 @@ export const propertyReducer = createSlice({
         state.personal_info = action.payload.data;
       }
     },
-    [UPDATE_UserGoal_DETAIL_BY_ID.pending]: (state, action) => {
+
+    [UPDATE_UserGoal_DETAIL_BY_ID.pending]: (state) => {
       state.loading = true;
     },
     [UPDATE_UserGoal_DETAIL_BY_ID.fulfilled]: (state, action) => {
       state.loading = false;
       state.user_info = action.payload.data;
     },
+
+    [SUSPEND_ACCOUNT.pending]: (state) => {
+      state.loading = true;
+    },
+    [SUSPEND_ACCOUNT.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.suspended_account_data = action.payload;
+    },
+
     [handleTransactionsCustomer.fulfilled]: (state, action) => {
-      state.transaction_history = action.payload.data;
+      state.transaction_history_recharge = action.payload.data.filter(
+        (item) => item.type === "recharge"
+      );
+      state.transaction_history_booking = action.payload.data.filter(
+        (item) => item.type === "booking"
+      );
+      state.transaction_history_refund = action.payload.data.filter(
+        (item) => item.type === "refund"
+      );
     },
     [transactionHistory.fulfilled]: (state, action) => {
-      console.log("fulfill", action.payload.data);
-
       const data = {
-        infoStripeUser: action.payload.data.infoStripeUser,
-        infoTransferUser: action.payload.data.infoTransferUser,
+        infoTransferUser: action.payload.data?.infoTransferUser,
       };
       state.user_transaction_history = data;
     },

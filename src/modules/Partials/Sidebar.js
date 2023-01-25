@@ -47,8 +47,18 @@ const Sidebar = () => {
         </li>
 
         <li
-          className={`nav-item ${pathname === "/admin/users" ? "active" : ""} `}
+          className={`nav-item ${
+            pathname === "/admin/bookings" ? "active" : ""
+          } `}
+          onClick={() => handleClose()}
         >
+          <Link className="nav-link" to="/admin/bookings">
+            <AccountCircleIcon className="mr-2" />
+            <span className="menu-title">Bookings</span>
+          </Link>
+        </li>
+
+        <li className="nav-item">
           <a
             className="nav-link"
             data-toggle="collapse"
@@ -62,17 +72,26 @@ const Sidebar = () => {
             <ArrowDropDownIcon className="ml-5" />
           </a>
           <div className="collapse" id="ui-basic">
-            <ul className="nav flex-column my-0 ">
-              <li className="nav-item">
+            <ul className="nav flex-column my-0">
+              <li
+                className={`nav-item ${
+                  pathname === "/admin/users/trainer" ? "active text-white" : ""
+                }`}
+              >
                 <Link className="nav-link" to="/admin/users/trainer">
                   <FitnessCenter className="mr-3" />
-                  Trainer
+                  <span className="menu-title">Trainer</span>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  pathname === "/admin/users/trainee" ? "active text-white" : ""
+                }`}
+              >
                 <Link className="nav-link" to="/admin/users/trainee">
                   <SportsGymnasticsIcon className="mr-3" />
-                  Trainee
+
+                  <span className="menu-title">Trainee</span>
                 </Link>
               </li>
             </ul>

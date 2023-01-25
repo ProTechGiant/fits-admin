@@ -1,3 +1,4 @@
+import { Launch } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux";
@@ -7,19 +8,10 @@ import SplashScreen from "../../../modules/Partials/SplashScreen";
 import { customStyles } from "../../../modules/styles/customStyles";
 import "./TransactionHistory";
 const TransactionHistory = () => {
-  const { transaction_history } = useSelector((state) => state.userData);
-  const [rowId, setRowId] = React.useState("");
-  const [offset, setOffset] = React.useState(0);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [totalTransactions, setTotalTransaction] = useState(0);
-  useEffect(() => {
-    setIsLoading(true);
-    if (transaction_history?.data) {
-      const lengthData = transaction_history?.data.length;
-      setTotalTransaction(lengthData);
-    }
-    setIsLoading(false);
-  }, [transaction_history]);
+  const { transaction_history_recharge } = useSelector(
+    (state) => state.userData
+  );
+
   const columns = [
     {
       name: "Index",
@@ -33,8 +25,8 @@ const TransactionHistory = () => {
       width: "auto",
       cell: (row, index) => (
         <small>
-          {`${row.amount}
-          ${CURRENCY_SYMBOLS[row.currency.toUpperCase()]}`}
+          {`${row?.recharge?.amount}
+           ${CURRENCY_SYMBOLS[row?.recharge?.currency.toUpperCase()]}`}
         </small>
       ),
     },
@@ -43,7 +35,7 @@ const TransactionHistory = () => {
       sortable: true,
       width: "auto",
       cell: (row, index) => (
-        <span>{new Date(row.created * 1000).toLocaleString()}</span>
+        <span>{new Date(row?.recharge?.created * 1000).toLocaleString()}</span>
       ),
     },
     {
@@ -52,8 +44,8 @@ const TransactionHistory = () => {
       width: "auto",
       cell: (row, index) => (
         <small>
-          {`${row.ending_balance}
-          ${CURRENCY_SYMBOLS[row.currency.toUpperCase()]}`}
+          {`${row?.recharge?.amount}
+    ${CURRENCY_SYMBOLS[row?.recharge?.currency.toUpperCase()]}`}
         </small>
       ),
     },
@@ -61,7 +53,7 @@ const TransactionHistory = () => {
       name: "Type",
       sortable: true,
       width: "auto",
-      cell: (row, index) => <small>{row.object}</small>,
+      cell: (row, index) => <small>{row?.type}</small>,
     },
     {
       name: "Actions",
@@ -69,14 +61,11 @@ const TransactionHistory = () => {
         return (
           <>
             <Link
-              to={`/transaction_history/${
-                row?.amount > 0 ? "sender" : "reciver"
-              }/${row?.created}/${row?.customer}`}
+              to={`/transaction_history/${row?.type}/${row?.recharge?.created}/${row?.recharge?.customer}`}
+              className="btn btn-icon mt-3 ml-2"
+              style={{ color: "#248afd" }}
             >
-              <button
-                type="button"
-                className="btn btn-inverse-info btn-icon mr-2 fa fa-fw fa-eye field-icon toggle-password mx-2 mt-1 mb-1"
-              ></button>
+              <Launch />
             </Link>
           </>
         );
@@ -85,22 +74,11 @@ const TransactionHistory = () => {
   ];
   return (
     <>
-      {isLoading && <SplashScreen />}
       <DataTable
-        paginationDefaultPage={offset === 0 ? 1 : offset}
         columns={columns}
-        selectableRows
-        data={transaction_history && transaction_history?.data}
+        data={transaction_history_recharge}
         customStyles={customStyles}
         pagination
-        fixedHeader
-        paginationServer
-        paginationComponentOptions={{
-          noRowsPerPage: 10,
-        }}
-        onChangePage={(page) => setOffset(page)}
-        paginationTotalRows={totalTransactions}
-        expandableRowExpanded={(row) => row._id === rowId}
       />
     </>
   );

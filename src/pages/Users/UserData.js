@@ -3,6 +3,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { GET_USER_DETAIL_BY_ID } from "../../reducers/userReducer";
+import Classes from "./classes/Classes";
 import Personal from "./Personal";
 import Professional from "./Professional";
 import Review from "./reviews/Review";
@@ -62,8 +63,11 @@ const UserData = () => {
               <Tab eventKey="Services" title="Services">
                 <Services />
               </Tab>
+              <Tab eventKey="Classes" title="Classes">
+                <Classes _id={id} />
+              </Tab>
               <Tab eventKey="Session" title="Session">
-                <Session />
+                <Session id={id} />
               </Tab>
               <Tab eventKey="Stripe" title="Stripe">
                 <Stripe />
