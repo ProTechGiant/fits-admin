@@ -4,7 +4,6 @@ import ErrorPage from "./modules/Errors/ErrorPage";
 import SplashScreen from "./modules/Partials/SplashScreen";
 import Bookings from "./pages/bookings/Bookings";
 import TransactionTabs from "./pages/Users/stripeInfo/Tabs";
-import TransactionDetails from "./pages/Users/stripeInfo/TransactionDetails";
 
 const DashboardPage = lazy(() => import("./pages/dashboard/"));
 const ProfilePage = lazy(() => import("./pages/Profile/Profile"));
