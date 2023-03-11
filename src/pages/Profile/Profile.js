@@ -15,7 +15,7 @@ const Profile = () => {
   const { user } = useSelector((state) => state.user);
 
   const [userInfo, setUserInfo] = useState({});
-
+  console.log("coming", userInfo);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -26,15 +26,7 @@ const Profile = () => {
   });
   const [newEdit, setNewEdit] = useState(false);
   const handleClose = () => setNewEdit(false);
-  const handleShowName = () => {
-    setData({
-      name: userInfo?.name,
-      email: "",
-      password: false,
-      id: userInfo?._id,
-    });
-    setNewEdit(true);
-  };
+
   const handleMe = () => {
     setLoading(true);
     try {
@@ -56,9 +48,24 @@ const Profile = () => {
     handleMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleShowName = () => {
+    setData({
+      name: userInfo?.name,
+      email: "",
+      password: false,
+      id: userInfo?._id,
+    });
+    setNewEdit(true);
+  };
   const handleShowEmail = () => {
     setNewEdit(true);
-    setData({ name: "", email: user?.email, password: false });
+    setData({
+      name: "",
+      email: user?.email,
+      password: false,
+      id: user?._id,
+    });
   };
   const handleShowPassword = () => {
     setNewEdit(true);

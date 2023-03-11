@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { baseUrl } from "../../config/baseUrl";
 import { Close } from "@mui/icons-material";
-const ProfileUpdate = (props) => {
+const ProfileUpdate = ({ newEdit, data, handleClose, reload }) => {
   const { user } = useSelector((state) => state?.user);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +19,6 @@ const ProfileUpdate = (props) => {
   const [oldPassword, setOldPassword] = useState("");
   const [updateNewPassword, setUpdatePassword] = useState("");
   const [updateConfirmPassword, setUpdateConfirmPassword] = useState("");
-
-  const { newEdit, data, handleClose, reload } = props;
 
   useEffect(() => {
     if (data?.name !== "") {
@@ -42,31 +40,33 @@ const ProfileUpdate = (props) => {
       toast.error("Password does not match");
 
       setIsLoading(false);
-    } else if (edit === false && !name) {
-      toast.error("Name is require");
-
+    } else if (edit === false && !name && data?.name) {
+      toast.error("Name is required");
+      setIsLoading(false);
+    } else if (edit === false && !email && data?.email) {
+      toast.error("Email is required");
       setIsLoading(false);
     } else {
-      let res;
+      let res, url;
+      url = `${baseUrl}/api/profile/edit/${title}/${
+        title === "name" ? data?.id : user?._id
+      }`;
+      const bodyData = {
+        email,
+        name,
+        password: updateNewPassword,
+        oldPassword: oldPassword,
+      };
+      console.log("url: " + url, bodyData);
       try {
-        res = await fetch(
-          `${baseUrl}/api/profile/edit/${title}/${
-            title === "name" ? data?.id : user?._id
-          }`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-            body: JSON.stringify({
-              email,
-              name,
-              password: updateNewPassword,
-              oldPassword: oldPassword,
-            }),
-          }
-        );
+        res = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+          body: JSON.stringify(bodyData),
+        });
         setIsLoading(false);
         if (res?.status === 200 || res?.status === 201) {
           handleCloseButton();
@@ -192,7 +192,7 @@ const ProfileUpdate = (props) => {
                     <div id="the-basics">
                       <input
                         className="typeahead"
-                        disabled={data.email}
+                        // disabled={data.email}
                         type="text"
                         value={data.name ? name : email}
                         onChange={
