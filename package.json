@@ -2,8 +2,8 @@
   "name": "food",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost:5000",
-  "proxy": "http://localhost:5000",
+  "homepage": "https://fits-backend-protechgiant.vercel.app",
+  "proxy": "https://fits-backend-protechgiant.vercel.app",
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.10.5",
